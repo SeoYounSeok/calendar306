@@ -1,10 +1,11 @@
 import React from 'react';
-import {SafeAreaView, Text} from 'react-native';
+import {SafeAreaView} from 'react-native';
+import Calendar from './src/screens/Calendar';
 
 const App = () => {
   return (
     <SafeAreaView>
-      <Text>Calendar</Text>
+      <Calendar />
     </SafeAreaView>
   );
 };
