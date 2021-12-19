@@ -23,7 +23,7 @@ const Calendar = () => {
         : thiswMonth.endOf('month').week();
     for (let week: number = startOfWeek; week <= endOfWeek; week++) {
       calendar.push(
-        <Text>
+        <Text style={styles.row}>
           {Array(7)
             .fill(0)
             .map((n, i) => {
@@ -37,8 +37,13 @@ const Calendar = () => {
                   .week(week - 52)
                   .add(n + i, 'day');
               }
-              return <Text key={i}>{current.format('D')}</Text>;
+              return (
+                <Text style={styles.box} key={i}>
+                  {current.format('D')}
+                </Text>
+              );
             })}
+          {'\n'}
         </Text>,
       );
     }
@@ -47,21 +52,31 @@ const Calendar = () => {
   return (
     <SafeAreaView>
       <View>
-        <Text></Text>
         <Text style={styles.text}>월,화,수,목,금,토,일</Text>
-        <Text>{createCalendar()}</Text>
+        <Text style={styles.container}>{createCalendar()}</Text>
       </View>
     </SafeAreaView>
   );
 };
 
 const styles = StyleSheet.create({
+  container: {
+    width: '100%',
+    height: '100%',
+    textAlign: 'center',
+  },
   text: {
     textAlign: 'center',
     color: '#292929',
     borderWidth: 1,
     borderColor: '#ababab',
     width: '100%',
+  },
+  row: {
+    textAlign: 'center',
+  },
+  box: {
+    textAlign: 'center',
   },
 });
 
