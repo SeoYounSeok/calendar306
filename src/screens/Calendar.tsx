@@ -1,5 +1,12 @@
 import React, {useState} from 'react';
-import {SafeAreaView, Text, Alert, View, StyleSheet} from 'react-native';
+import {
+  SafeAreaView,
+  Text,
+  Alert,
+  View,
+  StyleSheet,
+  TouchableWithoutFeedback,
+} from 'react-native';
 import dayjs from 'dayjs';
 
 const Calendar = () => {
@@ -23,7 +30,7 @@ const Calendar = () => {
         : thiswMonth.endOf('month').week();
     for (let week: number = startOfWeek; week <= endOfWeek; week++) {
       calendar.push(
-        <Text>
+        <Text style={styles.row}>
           {Array(7)
             .fill(0)
             .map((n, i) => {
@@ -37,8 +44,13 @@ const Calendar = () => {
                   .week(week - 52)
                   .add(n + i, 'day');
               }
-              return <Text key={i}>{current.format('D')}</Text>;
+              return (
+                <Text style={styles.box} key={i}>
+                  {current.format('D') + '일'}
+                </Text>
+              );
             })}
+          {'\n'}
         </Text>,
       );
     }
@@ -46,21 +58,49 @@ const Calendar = () => {
   };
   return (
     <SafeAreaView>
+      <View style={styles.weekText}>
+        <Text>일</Text>
+        <Text>월</Text>
+        <Text>화</Text>
+        <Text>수</Text>
+        <Text>목</Text>
+        <Text>금</Text>
+        <Text>토</Text>
+      </View>
       <View>
-        <Text></Text>
-        <Text style={styles.text}>월,화,수,목,금,토,일</Text>
-        <Text>{createCalendar()}</Text>
+        <TouchableWithoutFeedback
+          style={styles.container}
+          onPress={() => Alert.alert('navigation schedule')}>
+          <Text>{createCalendar()}</Text>
+        </TouchableWithoutFeedback>
       </View>
     </SafeAreaView>
   );
 };
 
 const styles = StyleSheet.create({
+  container: {
+    width: '100%',
+    height: '100%',
+    textAlign: 'center',
+  },
   text: {
     textAlign: 'center',
     color: '#292929',
     borderWidth: 1,
     borderColor: '#ababab',
+    width: '100%',
+  },
+  row: {
+    textAlign: 'center',
+  },
+  box: {
+    textAlign: 'center',
+  },
+  weekText: {
+    flexDirection: 'row',
+    textAlign: 'center',
+    justifyContent: 'space-evenly',
     width: '100%',
   },
 });

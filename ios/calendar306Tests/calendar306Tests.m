@@ -7,11 +7,11 @@
 #define TIMEOUT_SECONDS 600
 #define TEXT_TO_LOOK_FOR @"Welcome to React"
 
-@interface calendar1Tests : XCTestCase
+@interface calendar306Tests : XCTestCase
 
 @end
 
-@implementation calendar1Tests
+@implementation calendar306Tests
 
 - (BOOL)findSubviewInView:(UIView *)view matching:(BOOL(^)(UIView *view))test
 {
