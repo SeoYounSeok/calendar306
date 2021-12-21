@@ -8,8 +8,6 @@
  * @format
  */
 import React from 'react';
-import {SafeAreaView} from 'react-native';
-import Calendar from './src/screens/Calendar';
 import DrawerNavigator from './src/navigation/DrawerNavigator';
 import {NavigationContainer} from '@react-navigation/native';
 

@@ -28,9 +28,10 @@ const Calendar = () => {
       thiswMonth.endOf('month').week() === 1
         ? 53
         : thiswMonth.endOf('month').week();
+
     for (let week: number = startOfWeek; week <= endOfWeek; week++) {
       calendar.push(
-        <Text style={styles.row} key={week}>
+        <View key={week} style={styles.row}>
           {Array(7)
             .fill(0)
             .map((n, i) => {
@@ -44,33 +45,28 @@ const Calendar = () => {
                   .week(week - 52)
                   .add(n + i, 'day');
               }
-              return (
-                <Text style={styles.box} key={i}>
-                  {current.format('D') + '일'}
-                </Text>
-              );
+              return <Text style={styles.day}>{current.format('D')}</Text>;
             })}
-          {'\n'}
-        </Text>,
+        </View>,
       );
     }
     return calendar;
   };
   return (
-    <SafeAreaView>
+    <SafeAreaView style={styles.body}>
       <View style={styles.weekText}>
-        <Text>일</Text>
-        <Text>월</Text>
-        <Text>화</Text>
-        <Text>수</Text>
-        <Text>목</Text>
-        <Text>금</Text>
-        <Text>토</Text>
+        <Text style={styles.day}>일</Text>
+        <Text style={styles.day}>월</Text>
+        <Text style={styles.day}>화</Text>
+        <Text style={styles.day}>수</Text>
+        <Text style={styles.day}>목</Text>
+        <Text style={styles.day}>금</Text>
+        <Text style={styles.day}>토</Text>
       </View>
       <View style={styles.container}>
         <TouchableWithoutFeedback
           onPress={() => Alert.alert('navigation schedule')}>
-          <Text>{createCalendar()}</Text>
+          <View style={styles.weekRow}>{createCalendar()}</View>
         </TouchableWithoutFeedback>
       </View>
     </SafeAreaView>
@@ -78,29 +74,46 @@ const Calendar = () => {
 };
 
 const styles = StyleSheet.create({
+  body: {
+    height: '100%',
+  },
   container: {
+    flex: 1,
     width: '100%',
     height: '100%',
     textAlign: 'center',
+    // borderWidth: 1,
+    // borderColor: '#ababab',
+  },
+  day: {
+    flex: 1,
+    textAlign: 'center',
   },
   text: {
+    flex: 1,
     textAlign: 'center',
     color: '#292929',
-    borderWidth: 1,
-    borderColor: '#ababab',
     width: '100%',
   },
-  row: {
-    textAlign: 'center',
+  weekRow: {
+    flex: 1,
+    height: '100%',
+    flexDirection: 'column',
   },
-  box: {
+  row: {
+    flex: 1,
+    flexDirection: 'row',
     textAlign: 'center',
+    justifyContent: 'space-evenly',
+    borderBottomWidth: 1,
+    borderBottomColor: '#ababab',
   },
   weekText: {
     flexDirection: 'row',
     textAlign: 'center',
     justifyContent: 'space-evenly',
-    width: '100%',
+    borderBottomWidth: 1,
+    borderBottomColor: '#ababab',
   },
 });
 
