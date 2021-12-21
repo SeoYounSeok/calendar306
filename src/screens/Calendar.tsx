@@ -30,7 +30,7 @@ const Calendar = () => {
         : thiswMonth.endOf('month').week();
     for (let week: number = startOfWeek; week <= endOfWeek; week++) {
       calendar.push(
-        <Text style={styles.row}>
+        <Text style={styles.row} key={week}>
           {Array(7)
             .fill(0)
             .map((n, i) => {
@@ -67,9 +67,8 @@ const Calendar = () => {
         <Text>금</Text>
         <Text>토</Text>
       </View>
-      <View>
+      <View style={styles.container}>
         <TouchableWithoutFeedback
-          style={styles.container}
           onPress={() => Alert.alert('navigation schedule')}>
           <Text>{createCalendar()}</Text>
         </TouchableWithoutFeedback>

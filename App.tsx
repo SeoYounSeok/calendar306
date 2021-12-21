@@ -10,12 +10,14 @@
 import React from 'react';
 import {SafeAreaView} from 'react-native';
 import Calendar from './src/screens/Calendar';
+import DrawerNavigator from './src/navigation/DrawerNavigator';
+import {NavigationContainer} from '@react-navigation/native';
 
 const App = () => {
   return (
-    <SafeAreaView>
-      <Calendar />
-    </SafeAreaView>
+    <NavigationContainer>
+      <DrawerNavigator />
+    </NavigationContainer>
   );
 };
 export default App;
