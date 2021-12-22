@@ -1,4 +1,4 @@
-package com.calendar1;
+package com.calendar306;
 
 import com.facebook.react.ReactActivity;
 
@@ -10,6 +10,6 @@ public class MainActivity extends ReactActivity {
    */
   @Override
   protected String getMainComponentName() {
-    return "calendar1";
+    return "calendar306";
   }
 }

@@ -3,7 +3,7 @@ require_relative '../node_modules/@react-native-community/cli-platform-ios/nativ
 
 platform :ios, '11.0'
 
-target 'calendar1' do
+target 'calendar306' do
   config = use_native_modules!
 
   use_react_native!(
@@ -12,7 +12,7 @@ target 'calendar1' do
     :hermes_enabled => false
   )
 
-  target 'calendar1Tests' do
+  target 'calendar306Tests' do
     inherit! :complete
     # Pods for testing
   end
