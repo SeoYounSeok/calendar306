@@ -9,7 +9,7 @@ import {
 } from 'react-native';
 import dayjs from 'dayjs';
 
-const Calendar = () => {
+const Calendar = ({navigation}) => {
   const weekday = require('dayjs/plugin/weekday');
   const weekOfYear = require('dayjs/plugin/weekOfYear');
 
@@ -45,7 +45,11 @@ const Calendar = () => {
                   .week(week - 52)
                   .add(n + i, 'day');
               }
-              return <Text style={styles.day}>{current.format('D')}</Text>;
+              return (
+                <Text style={styles.day} key={i}>
+                  {current.format('D')}
+                </Text>
+              );
             })}
         </View>,
       );
@@ -65,7 +69,9 @@ const Calendar = () => {
       </View>
       <View style={styles.container}>
         <TouchableWithoutFeedback
-          onPress={() => Alert.alert('navigation schedule')}>
+          onPress={() => {
+            navigation.navigate('Schedule');
+          }}>
           <View style={styles.weekRow}>{createCalendar()}</View>
         </TouchableWithoutFeedback>
       </View>
