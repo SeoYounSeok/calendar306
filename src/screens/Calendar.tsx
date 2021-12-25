@@ -8,28 +8,22 @@ import {
   TouchableWithoutFeedback,
 } from 'react-native';
 import dayjs from 'dayjs';
+import weekOfYear from 'dayjs/plugin/weekOfYear';
 
 const Calendar = ({navigation}) => {
-  const weekday = require('dayjs/plugin/weekday');
-  const weekOfYear = require('dayjs/plugin/weekOfYear');
-
-  // day extend
-  dayjs.extend(weekday);
   dayjs.extend(weekOfYear);
 
   const [thiswMonth, setThiswMonth] = useState(dayjs());
+
+  // const prevMonth = setThiswMonth(thiswMonth.add(-1, 'month'));
+  // const nextMonth = setThiswMonth(thiswMonth.add(1, 'month'));
   const createCalendar = () => {
-    // calendar Array
     let calendar = [];
     const startOfWeek: number = thiswMonth.startOf('month').week();
     const endOfWeek: number =
       thiswMonth.endOf('month').week() === 1
         ? 53
         : thiswMonth.endOf('month').week();
-    // Alert.alert(startOfWeek.toString());
-    // 49
-    // Alert.alert(thiswMonth.startOf('week').toString());
-    // Alert.alert(thiswMonth.startOf('week').week(-3).add(0, 'day').toString());
     for (let week: number = startOfWeek; week <= endOfWeek + 1; week++) {
       calendar.push(
         <View key={week} style={styles.row}>
