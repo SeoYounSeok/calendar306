@@ -41,7 +41,6 @@ const Calendar = ({navigation}) => {
                   .add(1, 'year')
                   .add(n + i, 'day');
               }
-              console.log('123456');
               return (
                 <Text style={styles.day} key={i}>
                   {current.format('D')}
