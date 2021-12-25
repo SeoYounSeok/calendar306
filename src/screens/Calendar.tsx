@@ -17,19 +17,20 @@ const Calendar = ({navigation}) => {
   dayjs.extend(weekday);
   dayjs.extend(weekOfYear);
 
-  // Alert.alert(today.toString());
   const [thiswMonth, setThiswMonth] = useState(dayjs());
   const createCalendar = () => {
     // calendar Array
     let calendar = [];
-    // const startOfWeek: number = thiswMonth.startOf("month").week();
     const startOfWeek: number = thiswMonth.startOf('month').week();
     const endOfWeek: number =
       thiswMonth.endOf('month').week() === 1
         ? 53
         : thiswMonth.endOf('month').week();
-
-    for (let week: number = startOfWeek; week <= endOfWeek; week++) {
+    // Alert.alert(startOfWeek.toString());
+    // 49
+    // Alert.alert(thiswMonth.startOf('week').toString());
+    // Alert.alert(thiswMonth.startOf('week').week(-3).add(0, 'day').toString());
+    for (let week: number = startOfWeek; week <= endOfWeek + 1; week++) {
       calendar.push(
         <View key={week} style={styles.row}>
           {Array(7)
@@ -39,12 +40,14 @@ const Calendar = ({navigation}) => {
                 .startOf('week')
                 .week(week)
                 .add(n + i, 'day');
-              if (thiswMonth.format('MM') === '12') {
+              if (week > 52) {
                 current = thiswMonth
                   .startOf('week')
                   .week(week - 52)
+                  .add(1, 'year')
                   .add(n + i, 'day');
               }
+              console.log('123456');
               return (
                 <Text style={styles.day} key={i}>
                   {current.format('D')}
