@@ -9,6 +9,7 @@ import {
 } from 'react-native';
 import dayjs from 'dayjs';
 import weekOfYear from 'dayjs/plugin/weekOfYear';
+import GestureRecognizer, {swipeDirections} from 'react-native-swipe-gestures';
 
 const Calendar = ({navigation}) => {
   dayjs.extend(weekOfYear);
@@ -24,6 +25,9 @@ const Calendar = ({navigation}) => {
       thiswMonth.endOf('month').week() === 1
         ? 53
         : thiswMonth.endOf('month').week();
+    console.log('테스트 1 =  ' + thiswMonth.startOf('week').toString());
+    console.log('테스트 2 =  ' + thiswMonth.startOf('week').toString());
+
     for (let week: number = startOfWeek; week <= endOfWeek + 1; week++) {
       calendar.push(
         <View key={week} style={styles.row}>
@@ -43,7 +47,7 @@ const Calendar = ({navigation}) => {
               }
               return (
                 <Text style={styles.day} key={i}>
-                  {current.format('D')}
+                  {current.format('YYYYMMDD')}
                 </Text>
               );
             })}
@@ -52,26 +56,44 @@ const Calendar = ({navigation}) => {
     }
     return calendar;
   };
+  const onSwipe = (gestureName, gestureState) => {
+    const {SWIPE_LEFT, SWIPE_RIGHT} = swipeDirections;
+  };
+
+  const onSwipeLeft = gestureState => {
+    setThiswMonth(thiswMonth.add(1, 'month'));
+    console.log('왼쪽');
+  };
+
+  const onSwipeRight = gestureState => {
+    setThiswMonth(thiswMonth.subtract(1, 'month'));
+    console.log('오른쪽');
+  };
   return (
-    <SafeAreaView style={styles.body}>
-      <View style={styles.weekText}>
-        <Text style={styles.day}>일</Text>
-        <Text style={styles.day}>월</Text>
-        <Text style={styles.day}>화</Text>
-        <Text style={styles.day}>수</Text>
-        <Text style={styles.day}>목</Text>
-        <Text style={styles.day}>금</Text>
-        <Text style={styles.day}>토</Text>
-      </View>
-      <View style={styles.container}>
-        <TouchableWithoutFeedback
-          onPress={() => {
-            navigation.navigate('Schedule');
-          }}>
-          <View style={styles.weekRow}>{createCalendar()}</View>
-        </TouchableWithoutFeedback>
-      </View>
-    </SafeAreaView>
+    <GestureRecognizer
+      onSwipe={(direction, state) => onSwipe(direction, state)}
+      onSwipeLeft={state => onSwipeLeft(state)}
+      onSwipeRight={state => onSwipeRight(state)}>
+      <SafeAreaView style={styles.body}>
+        <View style={styles.weekText}>
+          <Text style={styles.day}>일</Text>
+          <Text style={styles.day}>월</Text>
+          <Text style={styles.day}>화</Text>
+          <Text style={styles.day}>수</Text>
+          <Text style={styles.day}>목</Text>
+          <Text style={styles.day}>금</Text>
+          <Text style={styles.day}>토</Text>
+        </View>
+        <View style={styles.container}>
+          <TouchableWithoutFeedback
+            onPress={() => {
+              navigation.navigate('Schedule');
+            }}>
+            <View style={styles.weekRow}>{createCalendar()}</View>
+          </TouchableWithoutFeedback>
+        </View>
+      </SafeAreaView>
+    </GestureRecognizer>
   );
 };
 
