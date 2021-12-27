@@ -15,6 +15,21 @@ const Calendar = ({navigation}) => {
   dayjs.extend(weekOfYear);
 
   const [thiswMonth, setThiswMonth] = useState(dayjs());
+  const [gesture, setGesture] = useState('None');
+
+  const onSwipe = (gestureName, gestureState) => {
+    const {SWIPE_UP, SWIPE_DOWN, SWIPE_LEFT, SWIPE_RIGHT} = swipeDirections;
+    setGesture(gestureName);
+  };
+
+  const onSwipeLeft = gestureState => {
+    setThiswMonth(thiswMonth.add(1, 'month'));
+  };
+
+  const onSwipeRight = gestureState => {
+    setThiswMonth(thiswMonth.subtract(1, 'month'));
+  };
+
   const createCalendar = () => {
     let calendar = [];
     const startOfWeek: number = thiswMonth.startOf('month').week();
@@ -50,17 +65,6 @@ const Calendar = ({navigation}) => {
       );
     }
     return calendar;
-  };
-  const onSwipe = (gestureName, gestureState) => {
-    const {SWIPE_LEFT, SWIPE_RIGHT} = swipeDirections;
-  };
-
-  const onSwipeLeft = gestureState => {
-    setThiswMonth(thiswMonth.add(1, 'month'));
-  };
-
-  const onSwipeRight = gestureState => {
-    setThiswMonth(thiswMonth.subtract(1, 'month'));
   };
   return (
     <GestureRecognizer
