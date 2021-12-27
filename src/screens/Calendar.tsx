@@ -15,9 +15,6 @@ const Calendar = ({navigation}) => {
   dayjs.extend(weekOfYear);
 
   const [thiswMonth, setThiswMonth] = useState(dayjs());
-
-  // const prevMonth = setThiswMonth(thiswMonth.add(-1, 'month'));
-  // const nextMonth = setThiswMonth(thiswMonth.add(1, 'month'));
   const createCalendar = () => {
     let calendar = [];
     const startOfWeek: number = thiswMonth.startOf('month').week();
@@ -25,8 +22,6 @@ const Calendar = ({navigation}) => {
       thiswMonth.endOf('month').week() === 1
         ? 53
         : thiswMonth.endOf('month').week();
-    console.log('테스트 1 =  ' + thiswMonth.startOf('week').toString());
-    console.log('테스트 2 =  ' + thiswMonth.startOf('week').toString());
 
     for (let week: number = startOfWeek; week <= endOfWeek + 1; week++) {
       calendar.push(
@@ -35,19 +30,19 @@ const Calendar = ({navigation}) => {
             .fill(0)
             .map((n, i) => {
               let current = thiswMonth
-                .startOf('week')
+                .startOf('year')
                 .week(week)
+                .startOf('week')
                 .add(n + i, 'day');
               if (week > 52) {
                 current = thiswMonth
                   .startOf('week')
                   .week(week - 52)
-                  .add(1, 'year')
                   .add(n + i, 'day');
               }
               return (
                 <Text style={styles.day} key={i}>
-                  {current.format('YYYYMMDD')}
+                  {current.format('D')}
                 </Text>
               );
             })}
@@ -62,12 +57,10 @@ const Calendar = ({navigation}) => {
 
   const onSwipeLeft = gestureState => {
     setThiswMonth(thiswMonth.add(1, 'month'));
-    console.log('왼쪽');
   };
 
   const onSwipeRight = gestureState => {
     setThiswMonth(thiswMonth.subtract(1, 'month'));
-    console.log('오른쪽');
   };
   return (
     <GestureRecognizer
