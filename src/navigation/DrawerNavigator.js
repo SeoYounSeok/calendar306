@@ -8,21 +8,21 @@ const Drawer = createDrawerNavigator();
 
 const DrawerNavigator = () => {
   return (
-    <Drawer.Navigator initialRouteName="Calendar">
+    <Drawer.Navigator initialRouteName="Calendar" navig>
       <Drawer.Screen
         name="Calendar"
         component={Calendar}
-        options={{drawerLabel: 'calendar'}}
+        options={{drawerLabel: 'calendar', headerShown: false}}
       />
       <Drawer.Screen
         name="Memo"
         component={Memo}
-        options={{drawerLabel: 'Memo'}}
+        options={{drawerLabel: 'Memo', headerShown: false}}
       />
       <Drawer.Screen
         name="Schedule"
         component={Schedule}
-        options={{drawerLabel: 'Schedule'}}
+        options={{drawerLabel: 'Schedule', headerShown: false}}
       />
     </Drawer.Navigator>
   );
