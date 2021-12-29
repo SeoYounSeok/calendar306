@@ -18,7 +18,7 @@ const Calendar = ({navigation}) => {
   const [gesture, setGesture] = useState('None');
 
   const onSwipe = (gestureName, gestureState) => {
-    const {SWIPE_UP, SWIPE_DOWN, SWIPE_LEFT, SWIPE_RIGHT} = swipeDirections;
+    const {SWIPE_LEFT, SWIPE_RIGHT} = swipeDirections;
     setGesture(gestureName);
   };
 
