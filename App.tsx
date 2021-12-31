@@ -10,6 +10,7 @@
 import React from 'react';
 import DrawerNavigator from './src/navigation/DrawerNavigator';
 import {NavigationContainer} from '@react-navigation/native';
+import {Provider as ReduxProvider} from 'react-redux';
 
 const App = () => {
   return (
