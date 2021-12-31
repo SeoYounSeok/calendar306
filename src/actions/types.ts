@@ -1,4 +1,4 @@
-export type MonthActionTypes = {
-  NEXTMONTH: 'NEXTMONTH';
-  PREVMONTH: 'PREVMONTH';
+export const MonthActionTypes = {
+  NEXTMONTH: 'NEXTMONTH',
+  PREVMONTH: 'PREVMONTH',
 };

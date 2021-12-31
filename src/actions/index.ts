@@ -1,11 +1,9 @@
 import {MonthActionTypes} from './types';
 
-const nextMonthAction = () => ({
+export const nextMonthAction = () => ({
   type: MonthActionTypes.NEXTMONTH,
 });
 
-const prevMonthAction = () => ({
+export const prevMonthAction = () => ({
   type: MonthActionTypes.PREVMONTH,
 });
-
-export {nextMonthAction, prevMonthAction};
