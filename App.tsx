@@ -10,12 +10,19 @@
 import React from 'react';
 import DrawerNavigator from './src/navigation/DrawerNavigator';
 import {NavigationContainer} from '@react-navigation/native';
+import {createStore} from 'redux';
+import {Provider as ReduxProvider} from 'react-redux';
+import rootReducer from './src/reducers';
+
+const store = createStore(rootReducer);
 
 const App = () => {
   return (
-    <NavigationContainer>
-      <DrawerNavigator />
-    </NavigationContainer>
+    <ReduxProvider store={store}>
+      <NavigationContainer>
+        <DrawerNavigator />
+      </NavigationContainer>
+    </ReduxProvider>
   );
 };
 export default App;

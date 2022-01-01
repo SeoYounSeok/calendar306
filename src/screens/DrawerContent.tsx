@@ -2,7 +2,7 @@ import React from 'react';
 import {View, StyleSheet, Pressable, Text} from 'react-native';
 import {DrawerContentScrollView, DrawerItem} from '@react-navigation/drawer';
 import {Avatar, Title, Caption, Drawer} from 'react-native-paper';
-import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import Icon from 'react-native-vector-icons/Feather';
 
 const DrawerContent = props => {
   return (
@@ -16,15 +16,15 @@ const DrawerContent = props => {
               justifyContent: 'space-between',
             }}>
             <View style={{flexDirection: 'row'}}>
-              <Icon name="calendar" size={20} />
+              <Icon name="calendar" size={18} />
               <Text style={{marginLeft: 5, fontSize: 14, fontWeight: 'bold'}}>
                 306
               </Text>
             </View>
             <View style={{marginRight: 5}}>
               <Icon
-                name="cog-outline"
-                size={20}
+                name="settings"
+                size={19}
                 style={{width: '100%', alignItems: 'flex-end', marginRight: 5}}
               />
             </View>
@@ -49,6 +49,27 @@ const DrawerContent = props => {
             <Text>메모스타일</Text>
           </Pressable>
         </Drawer.Section>
+        <Drawer.Section style={styles.drawerSection}>
+          <Title style={{paddingLeft: 15, fontSize: 14, fontWeight: 'bold'}}>
+            서랍 보기
+          </Title>
+          <Pressable style={styles.pressable}>
+            <Icon name="folder" size={18} color={'skyblue'} />
+            <Text style={{marginLeft: 5}}>기본 서랍</Text>
+          </Pressable>
+          <Pressable style={styles.pressable}>
+            <Icon name="folder" size={18} />
+            <Text style={{marginLeft: 5}}>회사</Text>
+          </Pressable>
+          <Pressable style={styles.pressable}>
+            <Icon name="folder" size={18} />
+            <Text style={{marginLeft: 5}}>가족</Text>
+          </Pressable>
+          <Pressable style={styles.pressable}>
+            <Icon name="folder-plus" size={18} />
+            <Text style={{marginLeft: 5}}>서랍 정리</Text>
+          </Pressable>
+        </Drawer.Section>
         <View style={styles.drawerContent}>
           <View style={styles.userInfoSection}>
             <Title style={{fontSize: 16, fontWeight: 'bold'}}>Gmail</Title>
@@ -70,7 +91,7 @@ const DrawerContent = props => {
       <Drawer.Section style={styles.bottomDrawerSection}>
         <DrawerItem
           icon={({color, size}) => (
-            <Icon name="exit-to-app" color={color} size={size} />
+            <Icon name="log-out" color={color} size={size} />
           )}
           label="Sign Out"
           onPress={() => {}}
@@ -127,6 +148,7 @@ const styles = StyleSheet.create({
   },
   pressable: {
     paddingLeft: 18,
+    flexDirection: 'row',
   },
 });
 
