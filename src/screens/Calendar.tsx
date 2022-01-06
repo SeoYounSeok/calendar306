@@ -10,6 +10,8 @@ import {
 import dayjs from 'dayjs';
 import weekOfYear from 'dayjs/plugin/weekOfYear';
 import GestureRecognizer, {swipeDirections} from 'react-native-swipe-gestures';
+import IconButton from '../components/atoms/IconButton';
+
 
 const Calendar = ({navigation}) => {
   dayjs.extend(weekOfYear);
@@ -87,7 +89,10 @@ const Calendar = ({navigation}) => {
               navigation.navigate('Schedule');
             }}>
             <View style={styles.weekRow}>{createCalendar()}</View>
-          </TouchableWithoutFeedback>
+          </TouchableWithoutFeedback>         
+        </View>
+        <View style={styles.footerIcon}>
+          <IconButton icon="plus" onPress={() => {navigation.navigate('Schedule')}}/>
         </View>
       </SafeAreaView>
     </GestureRecognizer>
@@ -136,6 +141,14 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1,
     borderBottomColor: '#ababab',
   },
+  footerIcon: {
+    position : 'absolute',
+    bottom : 20,
+    right : 20,
+    borderWidth : 2,
+    borderRadius : 50,
+    borderStyle : 'dashed'
+  }
 });
 
 export default Calendar;
