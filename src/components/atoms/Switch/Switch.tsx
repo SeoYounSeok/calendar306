@@ -3,14 +3,16 @@ import {Switch} from 'react-native-paper';
 
 type SwitchProps = {
   value: boolean;
+  onValueChange: any;
 };
 
-const IsSwitch = ({value}: SwitchProps) => {
+const IsSwitch = ({value, onValueChange}: SwitchProps) => {
   return (
     <Switch
       value={value}
       onValueChange={() => {
         !value;
+        onValueChange;
       }}
     />
   );

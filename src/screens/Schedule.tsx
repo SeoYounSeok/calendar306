@@ -1,6 +1,7 @@
 import React, {useState} from 'react';
-import {SafeAreaView} from 'react-native';
+import {View, SafeAreaView, StyleSheet} from 'react-native';
 import TextInput from '../components/atoms/TextInput/TextInput';
+import Switch from '../components/atoms/Switch/Switch';
 
 const Schedule = () => {
   // 심플 or 디테일 스케줄 분기하는 스케줄의 속성 타입
@@ -28,30 +29,47 @@ const Schedule = () => {
   // 스케줄 반복 내용
   const [recurrenceValue, setRecurrenceValue] = useState(false);
 
-  return (
-    <SafeAreaView>
-      <TextInput
-        // style={styles.input}
+  const onValueChange = () => {
+    // visible 처리 추가 + 체크 시 나타나기
+  };
 
-        value={title}
-        placeholder="일정을 입력하세요."
+  return (
+    <SafeAreaView style={{flex: 1}}>
+      <Switch
+        value={isAllday}
+        onValueChange={console.log('변환시 들어갈 내용')}
       />
-      <TextInput
-        // style={styles.input}
-        style={{borderBottomColor: '#ababab', borderBottomWidth: 1}}
-        onChangeText={setContent}
-        value={content}
-        placeholder="세부정보를 입력해주세요"
-      />
-      <TextInput
-        // style={styles.input}
-        style={{borderBottomColor: '#ababab', borderBottomWidth: 1}}
-        onChangeText={setAttendant}
-        value={attendant}
-        placeholder="참가자를 선택해주세요."
-      />
+      <View style={styles.containers}>
+        <TextInput
+          label="스케줄 제목"
+          value={title}
+          onChangeText={setTitle}
+          placeholder="스케줄 제목을 입력하세요."
+        />
+        <TextInput
+          label="스케줄 내용"
+          value={content}
+          onChangeText={setContent}
+          placeholder="스케줄 내용을 입력하세요."
+        />
+        <TextInput
+          label="스케줄 장소"
+          value={location}
+          onChangeText={setLocation}
+          placeholder="스케줄 장소를 입력하세요."
+        />
+      </View>
     </SafeAreaView>
   );
 };
+
+const styles = StyleSheet.create({
+  containers: {
+    flex: 1,
+    backgroundColor: '#fff',
+    paddingLeft: 20,
+    paddingRight: 20,
+  },
+});
 
 export default Schedule;
