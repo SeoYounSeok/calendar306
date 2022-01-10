@@ -12,7 +12,6 @@ import weekOfYear from 'dayjs/plugin/weekOfYear';
 import GestureRecognizer, {swipeDirections} from 'react-native-swipe-gestures';
 import IconButton from '../components/atoms/IconButton';
 
-
 const Calendar = ({navigation}) => {
   dayjs.extend(weekOfYear);
 
@@ -35,12 +34,8 @@ const Calendar = ({navigation}) => {
   const createCalendar = () => {
     let calendar = [];
     const startOfWeek: number = thiswMonth.startOf('month').week();
-    const endOfWeek: number =
-      thiswMonth.endOf('month').week() === 1
-        ? 53
-        : thiswMonth.endOf('month').week();
-
-    for (let week: number = startOfWeek; week <= endOfWeek + 1; week++) {
+    const endOfWeek: number = startOfWeek + 6; // 6 주 고정
+    for (let week: number = startOfWeek; week < endOfWeek; week++) {
       calendar.push(
         <View key={week} style={styles.row}>
           {Array(7)
@@ -68,31 +63,44 @@ const Calendar = ({navigation}) => {
     }
     return calendar;
   };
+
+  const nameOfWeekKor: string[] = ['일', '월', '화', '수', '목', '금', '토'];
+  const nameOfWeekEng: string[] = [
+    'SUN',
+    'MON',
+    'TUE',
+    'WEN',
+    'THR',
+    'FRI',
+    'SAT',
+  ];
+
+  let weekNameArr = nameOfWeekKor || nameOfWeekEng;
+  let weekNameHeaderTag = weekNameArr.map(week => (
+    <Text style={styles.day}>{week}</Text>
+  ));
   return (
     <GestureRecognizer
       onSwipe={(direction, state) => onSwipe(direction, state)}
       onSwipeLeft={state => onSwipeLeft(state)}
       onSwipeRight={state => onSwipeRight(state)}>
       <SafeAreaView style={styles.body}>
-        <View style={styles.weekText}>
-          <Text style={styles.day}>일</Text>
-          <Text style={styles.day}>월</Text>
-          <Text style={styles.day}>화</Text>
-          <Text style={styles.day}>수</Text>
-          <Text style={styles.day}>목</Text>
-          <Text style={styles.day}>금</Text>
-          <Text style={styles.day}>토</Text>
-        </View>
+        <View style={styles.weekText}>{weekNameHeaderTag}</View>
         <View style={styles.container}>
           <TouchableWithoutFeedback
             onPress={() => {
               navigation.navigate('Schedule');
             }}>
             <View style={styles.weekRow}>{createCalendar()}</View>
-          </TouchableWithoutFeedback>         
+          </TouchableWithoutFeedback>
         </View>
         <View style={styles.footerIcon}>
-          <IconButton icon="plus" onPress={() => {navigation.navigate('Schedule')}}/>
+          <IconButton
+            icon="plus"
+            onPress={() => {
+              navigation.navigate('Schedule');
+            }}
+          />
         </View>
       </SafeAreaView>
     </GestureRecognizer>
@@ -142,13 +150,13 @@ const styles = StyleSheet.create({
     borderBottomColor: '#ababab',
   },
   footerIcon: {
-    position : 'absolute',
-    bottom : 20,
-    right : 20,
-    borderWidth : 2,
-    borderRadius : 50,
-    borderStyle : 'dashed'
-  }
+    position: 'absolute',
+    bottom: 20,
+    right: 20,
+    borderWidth: 2,
+    borderRadius: 50,
+    borderStyle: 'dashed',
+  },
 });
 
 export default Calendar;

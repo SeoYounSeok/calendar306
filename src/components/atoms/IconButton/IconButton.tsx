@@ -5,7 +5,7 @@ import {StyleSheet} from 'react-native';
 
 type IconButtonTypes = {
   icon: string;
-  onPress: () => {};
+  onPress: any;
 };
 
 const Button = ({...props}: IconButtonTypes) => {

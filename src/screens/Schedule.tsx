@@ -29,6 +29,7 @@ const Schedule = () => {
   // 스케줄 반복 내용
   const [recurrenceValue, setRecurrenceValue] = useState(false);
 
+  // 스케줄 타입에 따른, 값 visible 변수 처리
   const onValueChange = () => {
     // visible 처리 추가 + 체크 시 나타나기
   };
