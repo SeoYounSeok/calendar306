@@ -1,10 +1,18 @@
 import API from '../utils/Api';
 
-export const register = async (params: any) => {
+type userProps = {
+  name: string;
+  password?: string;
+  address: string;
+};
+
+export const register = async ({...props}: userProps) => {
   await API.post('/users/create', {
-    name: params.name,
-    password: params.password,
-    address: params.address,
+    params: {
+      name: props.name,
+      password: props.password,
+      address: props.address,
+    },
   })
     .then(function (response) {
       console.log(response);
