@@ -38,7 +38,9 @@ const Schedule = () => {
     <SafeAreaView style={{flex: 1}}>
       <Switch
         value={isAllday}
-        onValueChange={console.log('변환시 들어갈 내용')}
+        onValueChange={() => {
+          setIsAllday(!isAllday);
+        }}
       />
       <View style={styles.containers}>
         <TextInput

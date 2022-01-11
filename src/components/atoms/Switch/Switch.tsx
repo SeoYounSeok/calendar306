@@ -7,15 +7,7 @@ type SwitchProps = {
 };
 
 const IsSwitch = ({value, onValueChange}: SwitchProps) => {
-  return (
-    <Switch
-      value={value}
-      onValueChange={() => {
-        !value;
-        onValueChange;
-      }}
-    />
-  );
+  return <Switch color="skyblue" value={value} onValueChange={onValueChange} />;
 };
 
 IsSwitch.defaultProps = {
