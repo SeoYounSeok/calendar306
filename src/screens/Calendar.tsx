@@ -77,7 +77,9 @@ const Calendar = ({navigation}) => {
 
   let weekNameArr = nameOfWeekKor || nameOfWeekEng;
   let weekNameHeaderTag = weekNameArr.map(week => (
-    <Text style={styles.day}>{week}</Text>
+    <Text style={styles.day} key={week}>
+      {week}
+    </Text>
   ));
   return (
     <GestureRecognizer

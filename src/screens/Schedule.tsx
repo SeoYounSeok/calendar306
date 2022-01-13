@@ -1,8 +1,9 @@
 import React, {useState} from 'react';
-import {View, SafeAreaView, StyleSheet} from 'react-native';
+import {Text, View, SafeAreaView, StyleSheet} from 'react-native';
 import TextInput from '../components/atoms/TextInput/TextInput';
 import Switch from '../components/atoms/Switch/Switch';
-
+import Reminder from './Modal/Reminder';
+import Recurrence from './Modal/Recurrence';
 const Schedule = () => {
   // 심플 or 디테일 스케줄 분기하는 스케줄의 속성 타입
   const [calendarType, setCalendarType] = useState('simple');
@@ -23,15 +24,22 @@ const Schedule = () => {
   // 스케줄 알림 여부
   const [isReminder, setIsReminder] = useState(false);
   // 스케줄 알림 주기 설정
-  const [reminderValue, setReminderValue] = useState(false);
+  const [reminderValue, setReminderValue] = useState('');
   // 스케줄 반복 여부
   const [isRecurrence, setIsRecurrence] = useState(false);
   // 스케줄 반복 내용
-  const [recurrenceValue, setRecurrenceValue] = useState(false);
+  const [recurrenceValue, setRecurrenceValue] = useState('');
 
   // 스케줄 타입에 따른, 값 visible 변수 처리
   const onValueChange = () => {
     // visible 처리 추가 + 체크 시 나타나기
+  };
+
+  const getReminderValue = (value: string) => {
+    setReminderValue(value);
+  };
+  const getRecurrenceValue = (value: string) => {
+    setRecurrenceValue(value);
   };
 
   return (
@@ -61,6 +69,11 @@ const Schedule = () => {
           onChangeText={setLocation}
           placeholder="스케줄 장소를 입력하세요."
         />
+        <Recurrence
+          value={recurrenceValue}
+          getRecurrenceValue={getRecurrenceValue}
+        />
+        <Reminder value={reminderValue} getReminderValue={getReminderValue} />
       </View>
     </SafeAreaView>
   );
@@ -70,8 +83,6 @@ const styles = StyleSheet.create({
   containers: {
     flex: 1,
     backgroundColor: '#fff',
-    paddingLeft: 20,
-    paddingRight: 20,
   },
 });
 

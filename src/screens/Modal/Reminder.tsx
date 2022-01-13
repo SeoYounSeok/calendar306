@@ -1,33 +1,56 @@
 import React, {useState} from 'react';
-import {View} from 'react-native';
-import {Modal, Text, Button} from 'react-native-paper';
-const Recurrence = () => {
-  const [visible, setVisible] = React.useState(false);
+import {Modal, View, SafeAreaView} from 'react-native';
+import {Text, Button} from 'react-native-paper';
+import IconButton from '../../components/atoms/IconButton';
+import {windowWidth, windowHeight} from '../../utils/Dimensions';
 
+const Reminder = ({...props}: any) => {
+  const [visible, setVisible] = useState(false);
+  const [remindData, setRemindData] = useState('알림 없음');
   const showModal = () => setVisible(true);
   const hideModal = () => setVisible(false);
-  const containerStyle = {backgroundColor: 'white', padding: 20};
+  const dataOfRemindArr: string[] = [
+    '알림 없음',
+    '10분 전',
+    '20분 전',
+    '30분 전',
+    '1시간 전',
+    '2시간 전',
+    '3시간 전',
+    '6시간 전',
+  ];
+  const onPressRemind = (remind: string) => {
+    props.getReminderValue(remind);
+    setRemindData(remind);
+    hideModal();
+  };
+
+  const dataOfRemindTag = dataOfRemindArr.map(remind => (
+    <Button
+      key={remind}
+      color="black"
+      onPress={() => {
+        onPressRemind(remind);
+      }}>
+      {remind}
+    </Button>
+  ));
+
   return (
-    <View style={{width: '100%', height: '100%'}}>
-      <Modal
-        visible={visible}
-        onDismiss={hideModal}
-        contentContainerStyle={containerStyle}>
-        <Text> 알림 없음</Text>
-        <Text> 10분 전</Text>
-        <Text> 30분 전</Text>
-        <Text> 1시간 전 </Text>
-        <Text> 2시간 전</Text>
-        <Text> 3시간 전</Text>
-        <Text> 6시간 전</Text>
-        <Text> 1일 전</Text>
-        <Text> 일주일 전</Text>
+    <SafeAreaView>
+      <Modal animationType="slide" transparent={false} visible={visible}>
+        <SafeAreaView>
+          <View>
+            <IconButton icon="close" onPress={hideModal}></IconButton>
+            {dataOfRemindTag}
+          </View>
+        </SafeAreaView>
       </Modal>
-      <Button style={{marginTop: 30}} color="black" onPress={showModal}>
-        반복
+      <Button onPress={showModal}>
+        <Text>{remindData}</Text>
       </Button>
-    </View>
+    </SafeAreaView>
   );
 };
 
-export default Recurrence;
+export default Reminder;
