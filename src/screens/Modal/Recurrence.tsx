@@ -5,7 +5,6 @@ import IconButton from '../../components/atoms/IconButton';
 import {windowWidth, windowHeight} from '../../utils/Dimensions';
 
 const Recurrence = ({...props}: any) => {
-  console.log(props.recurrence);
   const [visible, setVisible] = useState(false);
   const [recurrenceData, setRecurrenceData] = useState('반복 없음');
   const showModal = () => setVisible(true);

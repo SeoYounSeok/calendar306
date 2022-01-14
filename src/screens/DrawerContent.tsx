@@ -4,7 +4,7 @@ import {DrawerContentScrollView, DrawerItem} from '@react-navigation/drawer';
 import {Avatar, Title, Caption, Drawer} from 'react-native-paper';
 import Icon from 'react-native-vector-icons/Feather';
 
-const DrawerContent = props => {
+const DrawerContent = (props: any) => {
   return (
     <View style={{flex: 1}}>
       <DrawerContentScrollView {...props}>

@@ -9,25 +9,25 @@ import {
 } from 'react-native';
 import dayjs from 'dayjs';
 import weekOfYear from 'dayjs/plugin/weekOfYear';
-import GestureRecognizer, {swipeDirections} from 'react-native-swipe-gestures';
+import GestureRecognizer from 'react-native-swipe-gestures';
 import IconButton from '../components/atoms/IconButton';
 
-const Calendar = ({navigation}) => {
+const Calendar = ({navigation}: any) => {
   dayjs.extend(weekOfYear);
 
   const [thiswMonth, setThiswMonth] = useState(dayjs());
   const [gesture, setGesture] = useState('None');
 
-  const onSwipe = (gestureName, gestureState) => {
-    const {SWIPE_LEFT, SWIPE_RIGHT} = swipeDirections;
+  const onSwipe = (gestureName: string, gestureState: any) => {
+    // const {SWIPE_LEFT, SWIPE_RIGHT} = swipeDirections;
     setGesture(gestureName);
   };
 
-  const onSwipeLeft = gestureState => {
+  const onSwipeLeft = (gestureState: any) => {
     setThiswMonth(thiswMonth.add(1, 'month'));
   };
 
-  const onSwipeRight = gestureState => {
+  const onSwipeRight = (gestureState: any) => {
     setThiswMonth(thiswMonth.subtract(1, 'month'));
   };
 
