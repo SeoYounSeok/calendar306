@@ -2,7 +2,6 @@ import React, {useState} from 'react';
 import {
   SafeAreaView,
   Text,
-  Alert,
   View,
   StyleSheet,
   TouchableWithoutFeedback,
