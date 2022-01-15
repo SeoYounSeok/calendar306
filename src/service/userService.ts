@@ -6,7 +6,7 @@ type userProps = {
   address: string;
 };
 
-export const register = async ({...props}: userProps) => {
+export const registerService = async ({...props}: userProps) => {
   await API.post('/users/create', {
     params: {
       name: props.name,
