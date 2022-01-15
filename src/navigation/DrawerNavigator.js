@@ -4,13 +4,14 @@ import Calendar from '../screens/Calendar';
 import Memo from '../screens/Memo';
 import Schedule from '../screens/Schedule';
 import DrawerContent from '../screens/DrawerContent';
-
+import Login from '../screens/Login';
+import Register from '../screens/Register';
 const Drawer = createDrawerNavigator();
 
 const DrawerNavigator = () => {
   return (
     <Drawer.Navigator
-      initialRouteName="Memo"
+      initialRouteName="Login"
       drawerContent={props => <DrawerContent {...props} />}>
       <Drawer.Screen
         name="Calendar"
@@ -26,6 +27,17 @@ const DrawerNavigator = () => {
         name="Schedule"
         component={Schedule}
         options={{drawerLabel: 'Schedule', headerShown: false}}
+      />
+      <Drawer.Screen
+        name="Login"
+        component={Login}
+        options={{drawerLabel: 'Login', headerShown: false}}
+      />
+
+      <Drawer.Screen
+        name="Register"
+        component={Register}
+        options={{drawerLabel: 'Register', headerShown: false}}
       />
     </Drawer.Navigator>
   );

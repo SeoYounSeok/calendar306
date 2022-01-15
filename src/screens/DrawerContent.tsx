@@ -94,7 +94,9 @@ const DrawerContent = (props: any) => {
             <Icon name="log-out" color={color} size={size} />
           )}
           label="Sign Out"
-          onPress={() => {}}
+          onPress={() => {
+            props.navigation.navigate('Login');
+          }}
         />
       </Drawer.Section>
     </View>
