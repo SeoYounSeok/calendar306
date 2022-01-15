@@ -6,7 +6,8 @@ import Reminder from './Modal/Reminder';
 import Recurrence from './Modal/Recurrence';
 const Schedule = () => {
   // 심플 or 디테일 스케줄 분기하는 스케줄의 속성 타입
-  const [calendarType, setCalendarType] = useState('simple');
+  // simple = false, detail = true (boolean 처리를 위해)
+  const [calendarType, setCalendarType] = useState(false);
   // 스케줄(메모) 제목
   const [title, setTitle] = useState('');
   // 스케줄(메모) 내용
@@ -30,11 +31,6 @@ const Schedule = () => {
   // 스케줄 반복 내용
   const [recurrenceValue, setRecurrenceValue] = useState('');
 
-  // 스케줄 타입에 따른, 값 visible 변수 처리
-  const onValueChange = () => {
-    // visible 처리 추가 + 체크 시 나타나기
-  };
-
   const getReminderValue = (value: string) => {
     setReminderValue(value);
   };
@@ -44,12 +40,25 @@ const Schedule = () => {
 
   return (
     <SafeAreaView style={{flex: 1}}>
-      <Switch
-        value={isAllday}
-        onValueChange={() => {
-          setIsAllday(!isAllday);
-        }}
-      />
+      <View style={styles.row}>
+        <Text style={styles.switchText}>상세 정보 펼치기</Text>
+        <Switch
+          value={calendarType}
+          onValueChange={() => {
+            setCalendarType(!calendarType);
+          }}
+        />
+      </View>
+      <View style={styles.row}>
+        <Text style={styles.switchText}>하루 종일</Text>
+        <Switch
+          value={isAllday}
+          onValueChange={() => {
+            setIsAllday(!isAllday);
+          }}
+        />
+      </View>
+
       <View style={styles.containers}>
         <TextInput
           label="스케줄 제목"
@@ -69,11 +78,40 @@ const Schedule = () => {
           onChangeText={setLocation}
           placeholder="스케줄 장소를 입력하세요."
         />
-        <Recurrence
-          value={recurrenceValue}
-          getRecurrenceValue={getRecurrenceValue}
+        <TextInput
+          label="스케줄 참여자"
+          value={attendant}
+          onChangeText={setAttendant}
+          placeholder="스케줄 참여자를 입력하세요."
         />
-        <Reminder value={reminderValue} getReminderValue={getReminderValue} />
+      </View>
+      <View style={styles.row}>
+        <Text style={styles.switchText}>알림 설정</Text>
+        <Switch
+          value={isReminder}
+          onValueChange={() => {
+            setIsReminder(!isReminder);
+          }}
+        />
+        {isReminder && (
+          <Reminder value={reminderValue} getReminderValue={getReminderValue} />
+        )}
+      </View>
+
+      <View style={styles.row}>
+        <Text style={styles.switchText}>반복 설정</Text>
+        <Switch
+          value={isRecurrence}
+          onValueChange={() => {
+            setIsRecurrence(!isRecurrence);
+          }}
+        />
+        {isRecurrence && (
+          <Recurrence
+            value={recurrenceValue}
+            getRecurrenceValue={getRecurrenceValue}
+          />
+        )}
       </View>
     </SafeAreaView>
   );
@@ -81,8 +119,15 @@ const Schedule = () => {
 
 const styles = StyleSheet.create({
   containers: {
-    flex: 1,
     backgroundColor: '#fff',
+  },
+  row: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  switchText: {
+    fontSize: 15,
+    fontWeight: 'bold',
   },
 });
 
