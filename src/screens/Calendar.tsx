@@ -14,8 +14,11 @@ import IconButton from '../components/atoms/IconButton';
 const Calendar = ({navigation}: any) => {
   dayjs.extend(weekOfYear);
 
-  const [thiswMonth, setThiswMonth] = useState(dayjs());
+  const [thisMonth, setThisMonth] = useState(dayjs());
   const [gesture, setGesture] = useState('None');
+
+  console.log(thisMonth.startOf('week'));
+  console.log(thisMonth.endOf('week'));
 
   const onSwipe = (gestureName: string, gestureState: any) => {
     // const {SWIPE_LEFT, SWIPE_RIGHT} = swipeDirections;
@@ -23,16 +26,16 @@ const Calendar = ({navigation}: any) => {
   };
 
   const onSwipeLeft = (gestureState: any) => {
-    setThiswMonth(thiswMonth.add(1, 'month'));
+    setThisMonth(thisMonth.add(1, 'month'));
   };
 
   const onSwipeRight = (gestureState: any) => {
-    setThiswMonth(thiswMonth.subtract(1, 'month'));
+    setThisMonth(thisMonth.subtract(1, 'month'));
   };
 
   const createCalendar = () => {
     let calendar = [];
-    const startOfWeek: number = thiswMonth.startOf('month').week();
+    const startOfWeek: number = thisMonth.startOf('month').week();
     const endOfWeek: number = startOfWeek + 6; // 6 주 고정
     for (let week: number = startOfWeek; week < endOfWeek; week++) {
       calendar.push(
@@ -40,13 +43,13 @@ const Calendar = ({navigation}: any) => {
           {Array(7)
             .fill(0)
             .map((n, i) => {
-              let current = thiswMonth
+              let current = thisMonth
                 .startOf('year')
                 .week(week)
                 .startOf('week')
                 .add(n + i, 'day');
               if (week > 52) {
-                current = thiswMonth
+                current = thisMonth
                   .startOf('week')
                   .week(week - 52)
                   .add(n + i, 'day');
