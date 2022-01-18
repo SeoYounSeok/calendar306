@@ -12,17 +12,21 @@ import TextInput from '../components/atoms/TextInput';
 import {registerService} from '../service/userService';
 
 const Register = ({navigation}: any) => {
+  const [inputId, setInputId] = useState('');
   const [inputName, setInputName] = useState('');
   const [inputPassword, setInputPassword] = useState('');
   const [inputAddress, setInputAddress] = useState('');
 
   const registProps = {
+    userId : inputId,
     name: inputName,
     password: inputPassword,
     address: inputAddress,
   };
   const onPressRegister = () => {
-    !inputName
+    !inputId
+      ? Alert.alert('아이디를 입력해주세요')
+      : !inputName
       ? Alert.alert('이름을 입력해주세요.')
       : !inputPassword
       ? Alert.alert('비밀번호를 입력해주세요.')
@@ -33,6 +37,12 @@ const Register = ({navigation}: any) => {
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.body}>
+      <TextInput
+          label="ID"
+          value={inputId}
+          onChangeText={setInputId}
+          placeholder="아이디를 입력해주세요."
+        />
         <TextInput
           label="이름"
           value={inputName}
