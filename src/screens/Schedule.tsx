@@ -4,6 +4,8 @@ import TextInput from '../components/atoms/TextInput/TextInput';
 import Switch from '../components/atoms/Switch/Switch';
 import Reminder from './Modal/Reminder';
 import Recurrence from './Modal/Recurrence';
+import DatePicker from 'react-native-date-picker';
+
 const Schedule = () => {
   // 심플 or 디테일 스케줄 분기하는 스케줄의 속성 타입
   // simple = false, detail = true (boolean 처리를 위해)
@@ -15,9 +17,9 @@ const Schedule = () => {
   // 하루 종일 스케줄인지 체크
   const [isAllday, setIsAllday] = useState(false);
   // 스케줄 시작 시간
-  const [startDate, setStartDate] = useState('');
+  const [startDate, setStartDate] = useState(new Date());
   // 스케줄 종료 시간
-  const [endDate, setEndDate] = useState('');
+  const [endDate, setEndDate] = useState(new Date());
   // 스케줄이 진행될 장소 지정
   const [location, setLocation] = useState('');
   // 스케줄 참여 인원
@@ -84,6 +86,12 @@ const Schedule = () => {
           onChangeText={setAttendant}
           placeholder="스케줄 참여자를 입력하세요."
         />
+      </View>
+      <View>
+        <DatePicker date={startDate} onDateChange={setStartDate} />
+      </View>
+      <View>
+        <DatePicker date={endDate} onDateChange={setEndDate} />
       </View>
       <View style={styles.row}>
         <Text style={styles.switchText}>알림 설정</Text>
