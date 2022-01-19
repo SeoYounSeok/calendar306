@@ -1,5 +1,11 @@
 import React, {useState} from 'react';
-import {Text, View, SafeAreaView, StyleSheet} from 'react-native';
+import {
+  Text,
+  View,
+  SafeAreaView,
+  StyleSheet,
+  TouchableOpacity,
+} from 'react-native';
 import TextInput from '../components/atoms/TextInput/TextInput';
 import Switch from '../components/atoms/Switch/Switch';
 import Reminder from './Modal/Reminder';
@@ -7,6 +13,7 @@ import Recurrence from './Modal/Recurrence';
 import DatePicker from 'react-native-date-picker';
 
 const Schedule = () => {
+  const date = new Date();
   // 심플 or 디테일 스케줄 분기하는 스케줄의 속성 타입
   // simple = false, detail = true (boolean 처리를 위해)
   const [calendarType, setCalendarType] = useState(false);
@@ -17,9 +24,9 @@ const Schedule = () => {
   // 하루 종일 스케줄인지 체크
   const [isAllday, setIsAllday] = useState(false);
   // 스케줄 시작 시간
-  const [startDate, setStartDate] = useState(new Date());
+  const [startDate, setStartDate] = useState(date);
   // 스케줄 종료 시간
-  const [endDate, setEndDate] = useState(new Date());
+  const [endDate, setEndDate] = useState(date);
   // 스케줄이 진행될 장소 지정
   const [location, setLocation] = useState('');
   // 스케줄 참여 인원
@@ -32,12 +39,24 @@ const Schedule = () => {
   const [isRecurrence, setIsRecurrence] = useState(false);
   // 스케줄 반복 내용
   const [recurrenceValue, setRecurrenceValue] = useState('');
+  // 스케줄 시작 시간 표시
+  const [startDateVisible, setStartDateVisible] = useState(false);
+  // 스케줄 종료 시간 표시
+  const [endDateVisible, setEndDateVisible] = useState(false);
 
   const getReminderValue = (value: string) => {
     setReminderValue(value);
   };
   const getRecurrenceValue = (value: string) => {
     setRecurrenceValue(value);
+  };
+  const onPressStartDate = () => {
+    setStartDateVisible(!startDateVisible);
+    setEndDateVisible(false);
+  };
+  const onPressEndDate = () => {
+    setEndDateVisible(!endDateVisible);
+    setStartDateVisible(false);
   };
 
   return (
@@ -87,12 +106,21 @@ const Schedule = () => {
           placeholder="스케줄 참여자를 입력하세요."
         />
       </View>
-      <View>
+      <View style={styles.row}>
+        <TouchableOpacity onPress={onPressStartDate}>
+          <Text>{startDate.toISOString()}</Text>
+        </TouchableOpacity>
+        <Text> ~ </Text>
+        <TouchableOpacity onPress={onPressEndDate}>
+          <Text>{endDate.toISOString()}</Text>
+        </TouchableOpacity>
+      </View>
+      {!startDateVisible ? null : (
         <DatePicker date={startDate} onDateChange={setStartDate} />
-      </View>
-      <View>
+      )}
+      {!endDateVisible ? null : (
         <DatePicker date={endDate} onDateChange={setEndDate} />
-      </View>
+      )}
       <View style={styles.row}>
         <Text style={styles.switchText}>알림 설정</Text>
         <Switch
