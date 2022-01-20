@@ -11,14 +11,17 @@ import Switch from '../components/atoms/Switch/Switch';
 import Reminder from './Modal/Reminder';
 import Recurrence from './Modal/Recurrence';
 import DatePicker from 'react-native-date-picker';
-import {convertDateFormat, convertTimeFormat} from '../utils/DateUtils'
+import {convertDateFormat, convertTimeFormat} from '../utils/DateUtils';
 
 const Schedule = () => {
   const startDateInit = new Date();
-  const endDateInint = new Date(startDateInit.setHours(startDateInit.getHours() + 1));
+  const endDateInint = new Date(
+    startDateInit.setHours(startDateInit.getHours() + 1),
+  );
   // 심플 or 디테일 스케줄 분기하는 스케줄의 속성 타입
   // simple = false, detail = true (boolean 처리를 위해)
-  const [calendarType, setCalendarType] = useState(false);
+  const [calendarSwitch, setCalendarSwitch] = useState(false);
+  const [calendarType, setCalendarType] = useState('simple');
   // 스케줄(메모) 제목
   const [title, setTitle] = useState('');
   // 스케줄(메모) 내용
@@ -66,9 +69,14 @@ const Schedule = () => {
       <View style={styles.row}>
         <Text style={styles.switchText}>상세 정보 펼치기</Text>
         <Switch
-          value={calendarType}
+          value={calendarSwitch}
           onValueChange={() => {
-            setCalendarType(!calendarType);
+            setCalendarSwitch(!calendarSwitch);
+            {
+              !calendarSwitch
+                ? setCalendarType('simple')
+                : setCalendarType('detail');
+            }
           }}
         />
       </View>
