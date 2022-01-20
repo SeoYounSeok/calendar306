@@ -4,44 +4,69 @@ module.exports = function (app) {
   app.use(
     '/auth/login',
     createProxyMiddleware({
-      target: 'http://localhost:8000',
+      target: 'http://localhost:3001',
     }),
   );
   app.use(
     '/auth/logout',
     createProxyMiddleware({
-      target: 'http://localhost:8000',
+      target: 'http://localhost:3001',
     }),
   );
   // schedule
   app.use(
-    '/create',
+    '/schedule/create',
     createProxyMiddleware({
-      target: 'http://localhost:5000',
+      target: 'http://localhost:3001',
     }),
   );
   app.use(
-    '/all',
+    '/schedule/all',
     createProxyMiddleware({
-      target: 'http://localhost:8000',
+      target: 'http://localhost:3001',
     }),
   );
   app.use(
-    ':id',
+    '/schedule/:id',
     createProxyMiddleware({
-      target: 'http://localhost:8000',
+      target: 'http://localhost:3001',
     }),
   );
   app.use(
-    '/update/:id',
+    '/schedule/update/:id',
     createProxyMiddleware({
-      target: 'http://localhost:8000',
+      target: 'http://localhost:3001',
     }),
   );
   app.use(
-    '/remove/:id',
+    '/schedule/remove/:id',
     createProxyMiddleware({
-      target: 'http://localhost:8000',
+      target: 'http://localhost:3001',
+    }),
+  );
+  // user
+  app.use(
+    '/user',
+    createProxyMiddleware({
+      target: 'http://localhost:3001',
+    }),
+  );
+  app.use(
+    '/user/find/:id',
+    createProxyMiddleware({
+      target: 'http://localhost:3001',
+    }),
+  );
+  app.use(
+    '/user/create',
+    createProxyMiddleware({
+      target: 'http://localhost:3001',
+    }),
+  );
+  app.use(
+    '/user/update',
+    createProxyMiddleware({
+      target: 'http://localhost:3001',
     }),
   );
 };
