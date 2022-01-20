@@ -5,6 +5,7 @@ import {
   SafeAreaView,
   StyleSheet,
   TouchableOpacity,
+  ScrollView,
 } from 'react-native';
 import TextInput from '../components/atoms/TextInput/TextInput';
 import Switch from '../components/atoms/Switch/Switch';
@@ -12,8 +13,9 @@ import Reminder from './Modal/Reminder';
 import Recurrence from './Modal/Recurrence';
 import DatePicker from 'react-native-date-picker';
 import {convertDateFormat, convertTimeFormat} from '../utils/DateUtils';
+import {createSchedule} from '../service/scheduleService';
 
-const Schedule = () => {
+const Schedule = ({navigation}: any) => {
   const startDateInit = new Date();
   const endDateInint = new Date(
     startDateInit.setHours(startDateInit.getHours() + 1),
@@ -49,6 +51,23 @@ const Schedule = () => {
   // 스케줄 종료 시간 표시
   const [endDateVisible, setEndDateVisible] = useState(false);
 
+  const scheduleProps = {
+    userId: '', // userId 개발 필요
+    calendarType: calendarType,
+    directoryId: 0, // directoryId 개발 필요
+    title: title,
+    content: content,
+    isAllday: isAllday,
+    startDate: startDate,
+    endDate: endDate,
+    location: location,
+    attendant: attendant,
+    isReminder: isReminder,
+    reminderValue: reminderValue,
+    isRecurrence: isRecurrence,
+    recurrenceValue: recurrenceValue,
+  };
+
   const getReminderValue = (value: string) => {
     setReminderValue(value);
   };
@@ -63,108 +82,120 @@ const Schedule = () => {
     setEndDateVisible(!endDateVisible);
     setStartDateVisible(false);
   };
-
+  const onPressScheduleRegist = () => {
+    createSchedule(scheduleProps);
+    navigation.navigate('Calendar');
+  };
   return (
     <SafeAreaView style={{flex: 1}}>
-      <View style={styles.row}>
-        <Text style={styles.switchText}>상세 정보 펼치기</Text>
-        <Switch
-          value={calendarSwitch}
-          onValueChange={() => {
-            setCalendarSwitch(!calendarSwitch);
-            {
-              !calendarSwitch
-                ? setCalendarType('simple')
-                : setCalendarType('detail');
-            }
-          }}
-        />
-      </View>
-      <View style={styles.row}>
-        <Text style={styles.switchText}>하루 종일</Text>
-        <Switch
-          value={isAllday}
-          onValueChange={() => {
-            setIsAllday(!isAllday);
-          }}
-        />
-      </View>
-
-      <View style={styles.containers}>
-        <TextInput
-          label="스케줄 제목"
-          value={title}
-          onChangeText={setTitle}
-          placeholder="스케줄 제목을 입력하세요."
-        />
-        <TextInput
-          label="스케줄 내용"
-          value={content}
-          onChangeText={setContent}
-          placeholder="스케줄 내용을 입력하세요."
-        />
-        <TextInput
-          label="스케줄 장소"
-          value={location}
-          onChangeText={setLocation}
-          placeholder="스케줄 장소를 입력하세요."
-        />
-        <TextInput
-          label="스케줄 참여자"
-          value={attendant}
-          onChangeText={setAttendant}
-          placeholder="스케줄 참여자를 입력하세요."
-        />
-      </View>
-      <View style={styles.row}>
-        <TouchableOpacity onPress={onPressStartDate}>
-          <View>
-            <Text>{convertDateFormat(startDate)}</Text>
-            <Text>{convertTimeFormat(startDate)}</Text>
-          </View>
-        </TouchableOpacity>
-        <Text> ~ </Text>
-        <TouchableOpacity onPress={onPressEndDate}>
-          <View>
-            <Text>{convertDateFormat(endDate)}</Text>
-            <Text>{convertTimeFormat(endDate)}</Text>
-          </View>
-        </TouchableOpacity>
-      </View>
-      {!startDateVisible ? null : (
-        <DatePicker date={startDate} onDateChange={setStartDate} />
-      )}
-      {!endDateVisible ? null : (
-        <DatePicker date={endDate} onDateChange={setEndDate} />
-      )}
-      <View style={styles.row}>
-        <Text style={styles.switchText}>알림 설정</Text>
-        <Switch
-          value={isReminder}
-          onValueChange={() => {
-            setIsReminder(!isReminder);
-          }}
-        />
-        {isReminder && (
-          <Reminder value={reminderValue} getReminderValue={getReminderValue} />
-        )}
-      </View>
-
-      <View style={styles.row}>
-        <Text style={styles.switchText}>반복 설정</Text>
-        <Switch
-          value={isRecurrence}
-          onValueChange={() => {
-            setIsRecurrence(!isRecurrence);
-          }}
-        />
-        {isRecurrence && (
-          <Recurrence
-            value={recurrenceValue}
-            getRecurrenceValue={getRecurrenceValue}
+      <ScrollView>
+        <View style={styles.row}>
+          <Text style={styles.switchText}>상세 정보 펼치기</Text>
+          <Switch
+            value={calendarSwitch}
+            onValueChange={() => {
+              setCalendarSwitch(!calendarSwitch);
+              {
+                !calendarSwitch
+                  ? setCalendarType('simple')
+                  : setCalendarType('detail');
+              }
+            }}
           />
+        </View>
+        <View style={styles.row}>
+          <Text style={styles.switchText}>하루 종일</Text>
+          <Switch
+            value={isAllday}
+            onValueChange={() => {
+              setIsAllday(!isAllday);
+            }}
+          />
+        </View>
+
+        <View style={styles.containers}>
+          <TextInput
+            label="스케줄 제목"
+            value={title}
+            onChangeText={setTitle}
+            placeholder="스케줄 제목을 입력하세요."
+          />
+          <TextInput
+            label="스케줄 내용"
+            value={content}
+            onChangeText={setContent}
+            placeholder="스케줄 내용을 입력하세요."
+          />
+          <TextInput
+            label="스케줄 장소"
+            value={location}
+            onChangeText={setLocation}
+            placeholder="스케줄 장소를 입력하세요."
+          />
+          <TextInput
+            label="스케줄 참여자"
+            value={attendant}
+            onChangeText={setAttendant}
+            placeholder="스케줄 참여자를 입력하세요."
+          />
+        </View>
+        <View style={styles.row}>
+          <TouchableOpacity onPress={onPressStartDate}>
+            <View>
+              <Text>{convertDateFormat(startDate)}</Text>
+              <Text>{convertTimeFormat(startDate)}</Text>
+            </View>
+          </TouchableOpacity>
+          <Text> ~ </Text>
+          <TouchableOpacity onPress={onPressEndDate}>
+            <View>
+              <Text>{convertDateFormat(endDate)}</Text>
+              <Text>{convertTimeFormat(endDate)}</Text>
+            </View>
+          </TouchableOpacity>
+        </View>
+        {!startDateVisible ? null : (
+          <DatePicker date={startDate} onDateChange={setStartDate} />
         )}
-      </View>
+        {!endDateVisible ? null : (
+          <DatePicker date={endDate} onDateChange={setEndDate} />
+        )}
+        <View style={styles.row}>
+          <Text style={styles.switchText}>알림 설정</Text>
+          <Switch
+            value={isReminder}
+            onValueChange={() => {
+              setIsReminder(!isReminder);
+            }}
+          />
+          {isReminder && (
+            <Reminder
+              value={reminderValue}
+              getReminderValue={getReminderValue}
+            />
+          )}
+        </View>
+
+        <View style={styles.row}>
+          <Text style={styles.switchText}>반복 설정</Text>
+          <Switch
+            value={isRecurrence}
+            onValueChange={() => {
+              setIsRecurrence(!isRecurrence);
+            }}
+          />
+          {isRecurrence && (
+            <Recurrence
+              value={recurrenceValue}
+              getRecurrenceValue={getRecurrenceValue}
+            />
+          )}
+        </View>
+        {/* 일정등록은 어디로 이동할지 고민중 상단 탭에 CLOSE와 CHECK / 하단에 표시 */}
+        <TouchableOpacity onPress={onPressScheduleRegist}>
+          <Text>일정등록</Text>
+        </TouchableOpacity>
+      </ScrollView>
     </SafeAreaView>
   );
 };
