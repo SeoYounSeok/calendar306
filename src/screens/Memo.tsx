@@ -45,24 +45,9 @@ const styles = StyleSheet.create({
   },
 });
 
-const onPress = () => {
-  console.log('온 프레스 이벤트 실행');
-};
-
 const nameOfWeekKor: string[] = ['일', '월', '화', '수', '목', '금', '토'];
 const today = dayjs();
 const startOfWeek = today.startOf('week');
-
-const nameOfWeekArr = nameOfWeekKor.map((week: string, index: number) => (
-  <TouchableOpacity
-    key={startOfWeek.add(index, 'day').format('D')}
-    onPress={onPress}>
-    <Text style={styles.headerText}>{week}</Text>
-    <Text style={styles.headerText}>
-      {startOfWeek.add(index, 'day').format('D')}
-    </Text>
-  </TouchableOpacity>
-));
 
 const timeOfDayArr: string[] = [
   '오전 00:00',
@@ -97,7 +82,21 @@ const timeOfDayTag = timeOfDayArr.map((time: string, index: number) => (
     <TouchableOpacity></TouchableOpacity>
   </View>
 ));
-const Memo = () => {
+const Memo = ({navigation}: any) => {
+  const onDetail = () => {
+    navigation.navigate('MemoDetail');
+  };
+
+  const nameOfWeekArr = nameOfWeekKor.map((week: string, index: number) => (
+    <TouchableOpacity
+      key={startOfWeek.add(index, 'day').format('D')}
+      onPress={onDetail}>
+      <Text style={styles.headerText}>{week}</Text>
+      <Text style={styles.headerText}>
+        {startOfWeek.add(index, 'day').format('D')}
+      </Text>
+    </TouchableOpacity>
+  ));
   return (
     <SafeAreaView style={styles.body}>
       <View style={styles.containers}>

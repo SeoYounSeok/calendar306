@@ -17,9 +17,6 @@ const Calendar = ({navigation}: any) => {
   const [thisMonth, setThisMonth] = useState(dayjs());
   const [gesture, setGesture] = useState('None');
 
-  console.log(thisMonth.startOf('week'));
-  console.log(thisMonth.endOf('week'));
-
   const onSwipe = (gestureName: string, gestureState: any) => {
     // const {SWIPE_LEFT, SWIPE_RIGHT} = swipeDirections;
     setGesture(gestureName);

@@ -6,6 +6,8 @@ import Schedule from '../screens/Schedule';
 import DrawerContent from '../screens/DrawerContent';
 import Login from '../screens/Login';
 import Register from '../screens/Register';
+import StackMemoNavigator from './StackMemoNavigator';
+
 const Drawer = createDrawerNavigator();
 
 const DrawerNavigator = () => {
@@ -20,7 +22,7 @@ const DrawerNavigator = () => {
       />
       <Drawer.Screen
         name="Memo"
-        component={Memo}
+        component={StackMemoNavigator}
         options={{drawerLabel: 'Memo', headerShown: false}}
       />
       <Drawer.Screen
