@@ -83,14 +83,16 @@ const timeOfDayTag = timeOfDayArr.map((time: string, index: number) => (
   </View>
 ));
 const Memo = ({navigation}: any) => {
-  const onDetail = () => {
-    navigation.navigate('MemoDetail');
-  };
-
   const nameOfWeekArr = nameOfWeekKor.map((week: string, index: number) => (
     <TouchableOpacity
       key={startOfWeek.add(index, 'day').format('D')}
-      onPress={onDetail}>
+      onPress={() => {
+        navigation.navigate('MemoDetail', {
+          weeks: week,
+          days: startOfWeek.add(index, 'day').format('D'),
+          data: null,
+        });
+      }}>
       <Text style={styles.headerText}>{week}</Text>
       <Text style={styles.headerText}>
         {startOfWeek.add(index, 'day').format('D')}

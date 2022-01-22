@@ -13,7 +13,7 @@ const Drawer = createDrawerNavigator();
 const DrawerNavigator = () => {
   return (
     <Drawer.Navigator
-      initialRouteName="Login"
+      initialRouteName="Memo"
       drawerContent={props => <DrawerContent {...props} />}>
       <Drawer.Screen
         name="Calendar"
