@@ -9,14 +9,21 @@ import {
 import {Text} from 'react-native-paper';
 import TextInput from '../components/atoms/TextInput';
 import {windowHeight, windowWidth} from '../utils/Dimensions';
+import {loginService} from '../service/authService';
 
 const Login = ({navigation}: any) => {
   const [inputId, setInputId] = useState('');
   const [inputPassword, setInputPassword] = useState('');
 
+  const loginProps = {
+    userId: inputId,
+    password: inputPassword,
+  };
+
   const onPressLogin = () => {
     !inputId ? Alert.alert('아이디를 입력해주세요.') : null;
     !inputPassword ? Alert.alert('비밀번호를 입력해주세요.') : null;
+    loginService(loginProps);
     navigation.navigate('Calendar');
   };
   const onPressRegister = () => {
