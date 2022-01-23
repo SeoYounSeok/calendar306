@@ -8,13 +8,11 @@ type userProps = {
 };
 
 export const registerService = async ({...props}: userProps) => {
-  await API.post('/users/create', {
-    params: {
-      userId: props.userId,
-      name: props.name,
-      password: props.password,
-      address: props.address,
-    },
+  await API.post('/user/create', {
+    userId: props.userId,
+    name: props.name,
+    password: props.password,
+    address: props.address,
   })
     .then(function (response) {
       console.log(response);
