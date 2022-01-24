@@ -3,6 +3,7 @@ import {View, StyleSheet, Pressable, Text} from 'react-native';
 import {DrawerContentScrollView, DrawerItem} from '@react-navigation/drawer';
 import {Avatar, Title, Caption, Drawer} from 'react-native-paper';
 import Icon from 'react-native-vector-icons/Feather';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const DrawerContent = (props: any) => {
   return (
@@ -95,6 +96,7 @@ const DrawerContent = (props: any) => {
           )}
           label="Sign Out"
           onPress={() => {
+            AsyncStorage.removeItem('Token');
             props.navigation.navigate('Login');
           }}
         />
