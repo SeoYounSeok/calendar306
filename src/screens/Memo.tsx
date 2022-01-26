@@ -82,7 +82,11 @@ const timeOfDayTag = timeOfDayArr.map((time: string, index: number) => (
     <TouchableOpacity></TouchableOpacity>
   </View>
 ));
-const Memo = ({navigation}: any) => {
+const Memo = ({navigation, route}: any) => {
+  useEffect(() => {
+    console.log('component mounted');
+    return () => console.log('component unmounting');
+  }, []);
   const nameOfWeekArr = nameOfWeekKor.map((week: string, index: number) => (
     <TouchableOpacity
       key={startOfWeek.add(index, 'day').format('D')}

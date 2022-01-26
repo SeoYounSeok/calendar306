@@ -41,3 +41,13 @@ export const createSchedule = async ({...props}: scheduleProps) => {
       console.log(error);
     });
 };
+
+export const findUserSchedule = async (userId: string) => {
+  await API.post(`/schedule/${userId}`)
+    .then(function (response) {
+      console.log(response);
+    })
+    .catch(function (error) {
+      console.log(error);
+    });
+};

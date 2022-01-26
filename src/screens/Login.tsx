@@ -20,11 +20,13 @@ const Login = ({navigation}: any) => {
     password: inputPassword,
   };
 
-  const onPressLogin = () => {
+  const onPressLogin = (inputId: string) => {
     !inputId ? Alert.alert('아이디를 입력해주세요.') : null;
     !inputPassword ? Alert.alert('비밀번호를 입력해주세요.') : null;
     loginService(loginProps);
-    navigation.navigate('Calendar');
+    navigation.navigate('Memo', {
+      userId: inputId,
+    });
   };
   const onPressRegister = () => {
     navigation.navigate('Register');
@@ -45,7 +47,7 @@ const Login = ({navigation}: any) => {
           onChangeText={setInputPassword}
           placeholder="비밀번호를 입력하세요."
         />
-        <TouchableOpacity onPress={onPressLogin}>
+        <TouchableOpacity onPress={() => onPressLogin(inputId)}>
           <Text style={styles.touch}>로그인</Text>
         </TouchableOpacity>
         <TouchableOpacity onPress={onPressRegister}>
