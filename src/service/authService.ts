@@ -14,8 +14,8 @@ export interface AuthTokens {
   refreshToken: Token;
 }
 
-const saveToken = (Token: Token) => {
-  AsyncStorage.setItem('Token', Token);
+const setToken = async (Token: Token) => {
+  await AsyncStorage.setItem('@token', Token);
 };
 
 export const loginService = async ({...props}: loginProps) => {
@@ -24,10 +24,10 @@ export const loginService = async ({...props}: loginProps) => {
     password: props.password,
   })
     .then(function (response) {
-      console.log(response);
-      saveToken(response.data.body);
+      console.log('response = ' + response);
+      setToken(response.data.body);
     })
     .catch(function (error) {
-      console.log(error);
+      console.log('error = ' + error);
     });
 };
