@@ -8,6 +8,7 @@ import {
 } from 'react-native';
 import {Text} from 'react-native-paper';
 import dayjs from 'dayjs';
+import {findUserSchedule} from '../service/scheduleService'
 
 const styles = StyleSheet.create({
   body: {
@@ -85,6 +86,11 @@ const timeOfDayTag = timeOfDayArr.map((time: string, index: number) => (
 const Memo = ({navigation, route}: any) => {
   useEffect(() => {
     console.log('component mounted');
+    // findUserSchedule('1'); // 1로 테스트
+    const { userId } = route.params;
+    console.log(userId);
+    // findUserSchedule('1');
+    // 여기서 들어온 데이터 map 돌려서 데이터 뽑아내고 하단에 출력
     return () => console.log('component unmounting');
   }, []);
   const nameOfWeekArr = nameOfWeekKor.map((week: string, index: number) => (

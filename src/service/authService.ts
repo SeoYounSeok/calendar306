@@ -8,7 +8,7 @@ type loginProps = {
 
 type Token = string;
 
-// 아직 사용되지 않음.
+// refreshToken - server
 export interface AuthTokens {
   accessToken: Token;
   refreshToken: Token;
@@ -24,10 +24,10 @@ export const loginService = async ({...props}: loginProps) => {
     password: props.password,
   })
     .then(function (response) {
-      console.log('response = ' + response);
+      console.log(response);
       setToken(response.data.body);
     })
     .catch(function (error) {
-      console.log('error = ' + error);
+      console.log(error);
     });
 };

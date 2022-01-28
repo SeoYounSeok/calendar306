@@ -43,6 +43,7 @@ export const createSchedule = async ({...props}: scheduleProps) => {
 };
 
 export const findUserSchedule = async (userId: string) => {
+  console.log(userId); // userId 확인
   await API.post(`/schedule/${userId}`)
     .then(function (response) {
       console.log(response);
