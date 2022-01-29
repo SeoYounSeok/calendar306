@@ -89,12 +89,13 @@ const timeOfDayTag = timeOfDayArr.map((time: string, index: number) => (
 const Memo = ({navigation}: any) => {
   const getUserSchedule = async () => {
     const userId = await AsyncStorage.getItem('@userId');
+    // const scheduleData = await findUserSchedule(userId);
+    const scheduleData = await findUserSchedule('1');
     console.log('Memo UserId = ' + userId);
-    findUserSchedule('1');
+    console.log(scheduleData);
   };
   useEffect(() => {
     getUserSchedule();
-    console.log('component mounting');
     return () => console.log('component unmounting');
   }, []);
   const nameOfWeekArr = nameOfWeekKor.map((week: string, index: number) => (
