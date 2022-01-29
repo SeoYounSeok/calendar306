@@ -11,7 +11,7 @@ import IconButton from '../components/atoms/IconButton';
 
 const MemoDetail = ({navigation, route}: any) => {
   const goMemoMain = () => {
-    navigation.navigate('MemoMain');
+    navigation.navigate('Memo');
   };
   return (
     <SafeAreaView style={styles.container}>

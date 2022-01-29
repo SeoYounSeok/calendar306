@@ -13,7 +13,7 @@ const Drawer = createDrawerNavigator();
 const DrawerNavigator = () => {
   return (
     <Drawer.Navigator
-      initialRouteName="Memo"
+      initialRouteName="Login"
       drawerContent={props => <DrawerContent {...props} />}>
       <Drawer.Screen
         name="Calendar"
@@ -21,9 +21,9 @@ const DrawerNavigator = () => {
         options={{drawerLabel: 'calendar', headerShown: false}}
       />
       <Drawer.Screen
-        name="Memo"
+        name="StackMemoNavigator"
         component={StackMemoNavigator}
-        options={{drawerLabel: 'Memo', headerShown: false}}
+        options={{drawerLabel: 'StackMemoNavigator', headerShown: false}}
       />
       <Drawer.Screen
         name="Schedule"

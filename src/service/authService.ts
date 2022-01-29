@@ -7,6 +7,7 @@ type loginProps = {
 };
 
 type Token = string;
+type UseId = string;
 
 // refreshToken - server
 export interface AuthTokens {
@@ -16,6 +17,16 @@ export interface AuthTokens {
 
 const setToken = async (Token: Token) => {
   await AsyncStorage.setItem('@token', Token);
+  console.log('token 저장되었습니다.');
+  const asyncToken = await AsyncStorage.getItem('@token');
+  console.log(asyncToken);
+};
+
+const setUserId = async (userId: UseId) => {
+  await AsyncStorage.setItem('@userId', userId);
+  console.log('UserId 저장되었습니다.');
+  const asyncUserId = await AsyncStorage.getItem('@userId');
+  console.log(asyncUserId);
 };
 
 export const loginService = async ({...props}: loginProps) => {
@@ -23,11 +34,12 @@ export const loginService = async ({...props}: loginProps) => {
     userId: props.userId,
     password: props.password,
   })
-    .then(function (response) {
-      console.log(response);
-      setToken(response.data.body);
+    .then(async function (response) {
+      console.log('authService response');
+      await setUserId(props.userId);
+      await setToken(response.data.body);
     })
-    .catch(function (error) {
+    .catch(async function (error) {
       console.log(error);
     });
 };

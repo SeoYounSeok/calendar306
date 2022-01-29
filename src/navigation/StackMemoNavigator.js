@@ -8,14 +8,14 @@ const Stack = createStackNavigator();
 const StackMemoNavigator = () => {
   return (
     <Stack.Navigator
-      initialRouteName="MemoMain"
+      initialRouteName="Memo"
       screenOptions={{
         headerShown: false,
         gestureEnabled: false,
         cardOverlayEnabled: false,
         presentation: 'modal',
       }}>
-      <Stack.Screen name="MemoMain" component={Memo} />
+      <Stack.Screen name="Memo" component={Memo} />
       <Stack.Screen name="MemoDetail" component={MemoDetail} />
     </Stack.Navigator>
   );

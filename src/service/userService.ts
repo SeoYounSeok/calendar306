@@ -1,10 +1,10 @@
 import API from '../utils/Api';
 
 type userProps = {
-  userId: string;
-  name: string;
-  password: string;
-  address: string;
+  userId?: string;
+  name?: string;
+  password?: string;
+  address?: string;
 };
 
 export const registerService = async ({...props}: userProps) => {
@@ -22,10 +22,10 @@ export const registerService = async ({...props}: userProps) => {
     });
 };
 
-export const updateUserService = async (userId: string) => {
-  await API.patch(`/user/update/${userId}`)
+export const userInfoService = async (userId: string) => {
+  await API.post(`/user/find/${userId}`)
     .then(function (response) {
-      console.log('print response code console log');
+      console.log('userInfoService ,  print response code console log');
       console.log(response);
     })
     .catch(function (error) {
@@ -34,11 +34,15 @@ export const updateUserService = async (userId: string) => {
     });
 };
 
-
-export const deleteUserService = async (userId: string) => {
-  await API.delete(`/user/remove/${userId}`)
+export const updateUserService = async ({...props}: userProps) => {
+  await API.patch('/user/update', {
+    userId: props.userId,
+    name: props.name,
+    password: props.password,
+    address: props.address,
+  })
     .then(function (response) {
-      console.log('print response code console log');
+      console.log('updateUserService ,  print response code console log');
       console.log(response);
     })
     .catch(function (error) {

@@ -5,10 +5,12 @@ import {
   StyleSheet,
   TouchableOpacity,
   ScrollView,
+  Alert,
 } from 'react-native';
 import {Text} from 'react-native-paper';
 import dayjs from 'dayjs';
-import {findUserSchedule} from '../service/scheduleService'
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import {findUserSchedule} from '../service/scheduleService';
 
 const styles = StyleSheet.create({
   body: {
@@ -83,14 +85,16 @@ const timeOfDayTag = timeOfDayArr.map((time: string, index: number) => (
     <TouchableOpacity></TouchableOpacity>
   </View>
 ));
-const Memo = ({navigation, route}: any) => {
+
+const Memo = ({navigation}: any) => {
+  const getUserSchedule = async () => {
+    const userId = await AsyncStorage.getItem('@userId');
+    console.log('Memo UserId = ' + userId);
+    findUserSchedule('1');
+  };
   useEffect(() => {
-    console.log('component mounted');
-    // findUserSchedule('1'); // 1로 테스트
-    const { userId } = route.params;
-    console.log(userId);
-    // findUserSchedule('1');
-    // 여기서 들어온 데이터 map 돌려서 데이터 뽑아내고 하단에 출력
+    getUserSchedule();
+    console.log('component mounting');
     return () => console.log('component unmounting');
   }, []);
   const nameOfWeekArr = nameOfWeekKor.map((week: string, index: number) => (

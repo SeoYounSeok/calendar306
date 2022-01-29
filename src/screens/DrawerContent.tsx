@@ -45,7 +45,7 @@ const DrawerContent = (props: any) => {
           <Pressable
             style={styles.pressable}
             onPress={() => {
-              props.navigation.navigate('Memo');
+              props.navigation.navigate('StackMemoNavigator');
             }}>
             <Text>메모스타일</Text>
           </Pressable>
@@ -95,8 +95,8 @@ const DrawerContent = (props: any) => {
             <Icon name="log-out" color={color} size={size} />
           )}
           label="Sign Out"
-          onPress={() => {
-            AsyncStorage.removeItem('Token');
+          onPress={async () => {
+            await AsyncStorage.removeItem('Token');
             props.navigation.navigate('Login');
           }}
         />

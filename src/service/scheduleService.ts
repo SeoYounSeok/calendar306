@@ -43,9 +43,34 @@ export const createSchedule = async ({...props}: scheduleProps) => {
 };
 
 export const findUserSchedule = async (userId: string) => {
-  console.log(userId); // userId 확인
-  await API.post(`/schedule/${userId}`)
+  console.log('findUserSchedule 안에 들어온 userId = ' + userId); // userId 확인
+  await API.get(`/schedule/${userId}`)
     .then(function (response) {
+      console.log('findUserSchedule 호출된 response ');
+      console.log(response);
+    })
+    .catch(function (error) {
+      console.log(error);
+    });
+};
+
+export const updateUserSchedule = async (userId: string) => {
+  console.log('updateUserSchedule 안에 들어온 userId = ' + userId); // userId 확인
+  await API.patch(`/update/${userId}`)
+    .then(function (response) {
+      console.log('updateUserSchedule 호출된 response ');
+      console.log(response);
+    })
+    .catch(function (error) {
+      console.log(error);
+    });
+};
+
+export const removeUserSchedule = async (userId: string) => {
+  console.log('removeUserSchedule 안에 들어온 userId = ' + userId); // userId 확인
+  await API.delete(`/remove/${userId}`)
+    .then(function (response) {
+      console.log('removeUserSchedule 호출된 response ');
       console.log(response);
     })
     .catch(function (error) {

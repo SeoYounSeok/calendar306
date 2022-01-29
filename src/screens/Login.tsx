@@ -20,13 +20,11 @@ const Login = ({navigation}: any) => {
     password: inputPassword,
   };
 
-  const onPressLogin = (inputId: string) => {
+  const onPressLogin = async (inputId: string) => {
     !inputId ? Alert.alert('아이디를 입력해주세요.') : null;
     !inputPassword ? Alert.alert('비밀번호를 입력해주세요.') : null;
-    loginService(loginProps);
-    navigation.navigate('Memo', {
-      userId: inputId,
-    });
+    await loginService(loginProps);
+    await navigation.navigate('StackMemoNavigator');
   };
   const onPressRegister = () => {
     navigation.navigate('Register');

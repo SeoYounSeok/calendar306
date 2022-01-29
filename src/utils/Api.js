@@ -12,17 +12,15 @@ const API = axios.create({
 
 API.interceptors.request.use(
   async config => {
-    const token = await AsyncStorage.getItem('@token')
-    console.log(token)
-    if(token) {
-      config.headers.Authorization = 'Bearer ' + token
-      //console.log(config.headers.Authorization)
+    const token = await AsyncStorage.getItem('@token');
+    if (token) {
+      config.headers.Authorization = 'Bearer ' + token;
     }
-    return config
+    return config;
   },
   error => {
-    return Promise.reject(error)
-}
-)
+    return Promise.reject(error);
+  },
+);
 
 export default API;
