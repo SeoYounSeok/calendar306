@@ -87,17 +87,22 @@ const timeOfDayTag = timeOfDayArr.map((time: string, index: number) => (
 ));
 
 const Memo = ({navigation}: any) => {
+  // const [scheduleData, setScheuldData] = useState({}); // body : [] , {}
+
   const getUserSchedule = async () => {
     const userId = await AsyncStorage.getItem('@userId');
     // const scheduleData = await findUserSchedule(userId);
-    const scheduleData = await findUserSchedule('1');
-    console.log('Memo UserId = ' + userId);
-    console.log(scheduleData);
+    const scheduleData = await findUserSchedule('3'); // 3번으로 테스트 진행
+    setScheduleTag(scheduleData);
   };
+
   useEffect(() => {
     getUserSchedule();
     return () => console.log('component unmounting');
   }, []);
+
+  const setScheduleTag = (scheduleData: object) => {};
+
   const nameOfWeekArr = nameOfWeekKor.map((week: string, index: number) => (
     <TouchableOpacity
       key={startOfWeek.add(index, 'day').format('D')}
