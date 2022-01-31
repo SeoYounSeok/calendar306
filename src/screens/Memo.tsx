@@ -87,21 +87,20 @@ const timeOfDayTag = timeOfDayArr.map((time: string, index: number) => (
 ));
 
 const Memo = ({navigation}: any) => {
-  // const [scheduleData, setScheuldData] = useState({}); // body : [] , {}
+  const [userSchedule, setUserSchedule] = useState(null);
 
   const getUserSchedule = async () => {
     const userId = await AsyncStorage.getItem('@userId');
     // const scheduleData = await findUserSchedule(userId);
     const scheduleData = await findUserSchedule('3'); // 3번으로 테스트 진행
-    setScheduleTag(scheduleData);
+    setUserSchedule(scheduleData);
+    console.log(scheduleData);
   };
 
   useEffect(() => {
     getUserSchedule();
     return () => console.log('component unmounting');
   }, []);
-
-  const setScheduleTag = (scheduleData: object) => {};
 
   const nameOfWeekArr = nameOfWeekKor.map((week: string, index: number) => (
     <TouchableOpacity
@@ -119,12 +118,17 @@ const Memo = ({navigation}: any) => {
       </Text>
     </TouchableOpacity>
   ));
+
   return (
     <SafeAreaView style={styles.body}>
       <View style={styles.containers}>
         <View style={styles.header}>{nameOfWeekArr}</View>
         <View style={styles.summary}>
-          <Text style={{fontWeight: 'bold'}}>일정이 없습니다.</Text>
+          {!userSchedule ? (
+            <Text style={{fontWeight: 'bold'}}>일정이 없습니다.</Text>
+          ) : typeof userSchedule === 'object' ? (
+            <Text>{userSchedule.title}</Text>
+          ) : null}
         </View>
         <ScrollView style={styles.content}>{timeOfDayTag}</ScrollView>
       </View>
