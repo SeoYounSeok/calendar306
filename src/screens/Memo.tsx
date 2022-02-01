@@ -143,7 +143,10 @@ const Memo = ({navigation}: any) => {
           )}
         </View>
         <ScrollView style={styles.content}>
-          <TimeOfDaySchedule userSchedule={userSchedule} />
+          <TimeOfDaySchedule
+            userSchedule={userSchedule}
+            navigation={navigation}
+          />
         </ScrollView>
       </View>
     </SafeAreaView>

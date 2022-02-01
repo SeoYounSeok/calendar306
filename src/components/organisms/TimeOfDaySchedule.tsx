@@ -50,29 +50,38 @@ const styles = StyleSheet.create({
   },
 });
 
-const scheduleData = (userSchedule: object | null) => {
-  let startDate: string | null = null;
-  let endDate: string | null = null;
-  !userSchedule
-    ? null
-    : ((startDate = dateTimeFormat(userSchedule.startDate)),
-      (endDate = dateTimeFormat(userSchedule.endDate)));
-  // 지금 하나만 들어왔을 때, object 배열이 아닐 경우만 구현,
-  return timeOfDayArr.map((time: string, index: number) => (
-    <TouchableOpacity key={time + index} style={styles.data}>
-      <Text>{time}</Text>
-      {!startDate || !endDate ? null : startDate <= index + '00' &&
-        endDate >= index + '00' ? (
-        <Text style={styles.title}>{userSchedule.title}</Text>
-      ) : null}
-    </TouchableOpacity>
-  ));
-};
+const TimeOfDaySchedule = ({userSchedule, navigation}: any) => {
+  console.log('하위 컴포넌트 안의 navigation');
+  console.log(navigation);
+  const scheduleData = (userSchedule: object | null) => {
+    let startDate: string | null = null;
+    let endDate: string | null = null;
+    !userSchedule
+      ? null
+      : ((startDate = dateTimeFormat(userSchedule.startDate)),
+        (endDate = dateTimeFormat(userSchedule.endDate)));
+    // 지금 하나만 들어왔을 때, object 배열이 아닐 경우만 구현,
+    // 배열로 할지 고민 중?
+    return timeOfDayArr.map((time: string, index: number) => (
+      <TouchableOpacity
+        key={time + index}
+        style={styles.data}
+        onPress={() => {
+          navigation.navigate('MemoScheduleDetail', {
+            userSchedule: userSchedule,
+          });
+        }}>
+        <Text>{time}</Text>
+        {!startDate || !endDate ? null : !userSchedule.length &&
+          startDate <= index + '00' &&
+          endDate >= index + '00' ? (
+          <Text style={styles.title}>{userSchedule.title}</Text>
+        ) : null}
+      </TouchableOpacity>
+    ));
+  };
 
-const TimeOfDaySchedule = ({...props}) => {
-  return (
-    <View style={styles.container}>{scheduleData(props.userSchedule)}</View>
-  );
+  return <View style={styles.container}>{scheduleData(userSchedule)}</View>;
 };
 
 export default TimeOfDaySchedule;
