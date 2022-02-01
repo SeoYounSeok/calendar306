@@ -11,6 +11,7 @@ import {Text} from 'react-native-paper';
 import dayjs from 'dayjs';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {findUserSchedule} from '../service/scheduleService';
+import TimeOfDaySchedule from '../components/organisms/TimeOfDaySchedule';
 
 const styles = StyleSheet.create({
   body: {
@@ -36,8 +37,22 @@ const styles = StyleSheet.create({
     paddingLeft: 10,
     flex: 0.05,
   },
+  summaryItems: {
+    flexDirection: 'row',
+    flex: 1,
+    alignItems: 'center',
+  },
+  summaryItem: {
+    backgroundColor: '#F261DF',
+    borderWidth: 1,
+    borderColor: '#F261DF',
+    borderRadius: 10,
+    padding: 5,
+    marginRight: 5,
+  },
   content: {
     flex: 1,
+    paddingLeft: 10,
   },
   contentRow: {
     flexDirection: 'row',
@@ -52,49 +67,34 @@ const nameOfWeekKor: string[] = ['일', '월', '화', '수', '목', '금', '토'
 const today = dayjs();
 const startOfWeek = today.startOf('week');
 
-const timeOfDayArr: string[] = [
-  '오전 00:00',
-  '오전 01:00',
-  '오전 02:00',
-  '오전 03:00',
-  '오전 04:00',
-  '오전 05:00',
-  '오전 06:00',
-  '오전 07:00',
-  '오전 08:00',
-  '오전 09:00',
-  '오전 10:00',
-  '오전 11:00',
-  '오전 12:00',
-  '오후 13:00',
-  '오후 14:00',
-  '오후 15:00',
-  '오후 16:00',
-  '오후 17:00',
-  '오후 18:00',
-  '오후 19:00',
-  '오후 20:00',
-  '오후 21:00',
-  '오후 22:00',
-  '오후 23:00',
-];
-
-const timeOfDayTag = timeOfDayArr.map((time: string, index: number) => (
-  <View key={index} style={styles.contentRow}>
-    <Text>{time}</Text>
-    <TouchableOpacity></TouchableOpacity>
-  </View>
-));
+type ScheduleProps = {
+  userId: string;
+  calendarType: string;
+  directoryId: number;
+  title: string;
+  content: string;
+  isAllday: boolean;
+  startDate: Date;
+  endDate: Date;
+  location: string;
+  attendant: string;
+  isReminder: boolean;
+  reminderValue: string;
+  isRecurrence: boolean;
+  recurrenceValue: string;
+};
 
 const Memo = ({navigation}: any) => {
-  const [userSchedule, setUserSchedule] = useState(null);
+  const [userSchedule, setUserSchedule] = useState<
+    ScheduleProps | ScheduleProps[] | null
+  >(null);
 
   const getUserSchedule = async () => {
     const userId = await AsyncStorage.getItem('@userId');
     // const scheduleData = await findUserSchedule(userId);
     const scheduleData = await findUserSchedule('3'); // 3번으로 테스트 진행
     setUserSchedule(scheduleData);
-    console.log(scheduleData);
+    console.log(typeof scheduleData, scheduleData.length, scheduleData);
   };
 
   useEffect(() => {
@@ -126,11 +126,25 @@ const Memo = ({navigation}: any) => {
         <View style={styles.summary}>
           {!userSchedule ? (
             <Text style={{fontWeight: 'bold'}}>일정이 없습니다.</Text>
-          ) : typeof userSchedule === 'object' ? (
-            <Text>{userSchedule.title}</Text>
-          ) : null}
+          ) : !userSchedule.length ? (
+            <View style={styles.summaryItems}>
+              <Text style={styles.summaryItem} t>
+                {userSchedule.title}
+              </Text>
+            </View>
+          ) : (
+            <View style={styles.summaryItems}>
+              {userSchedule.map((schedule: object, index: number) => (
+                <Text key={'summary' + index} style={styles.summaryItem}>
+                  {schedule.title}
+                </Text>
+              ))}
+            </View>
+          )}
         </View>
-        <ScrollView style={styles.content}>{timeOfDayTag}</ScrollView>
+        <ScrollView style={styles.content}>
+          <TimeOfDaySchedule userSchedule={userSchedule} />
+        </ScrollView>
       </View>
     </SafeAreaView>
   );
