@@ -33,6 +33,11 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     marginBottom: 10,
   },
+  headerTodayText: {
+    textAlign: 'center',
+    marginBottom: 7,
+    borderRadius: 40,
+  },
   summary: {
     paddingLeft: 10,
     flex: 0.05,
@@ -102,6 +107,7 @@ const Memo = ({navigation}: any) => {
     return () => console.log('component unmounting');
   }, []);
 
+  console.log(today.get('date').toString());
   const nameOfWeekArr = nameOfWeekKor.map((week: string, index: number) => (
     <TouchableOpacity
       key={startOfWeek.add(index, 'day').format('D')}
@@ -113,9 +119,16 @@ const Memo = ({navigation}: any) => {
         });
       }}>
       <Text style={styles.headerText}>{week}</Text>
-      <Text style={styles.headerText}>
-        {startOfWeek.add(index, 'day').format('D')}
-      </Text>
+      {today.get('date').toString() ==
+      startOfWeek.add(index, 'day').format('D') ? (
+        <Text style={styles.headerTodayText}>
+          ಇ{startOfWeek.add(index, 'day').format('D')}ಇ
+        </Text>
+      ) : (
+        <Text style={styles.headerText}>
+          {startOfWeek.add(index, 'day').format('D')}
+        </Text>
+      )}
     </TouchableOpacity>
   ));
 

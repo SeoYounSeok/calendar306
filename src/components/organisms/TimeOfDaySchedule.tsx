@@ -72,8 +72,7 @@ const TimeOfDaySchedule = ({userSchedule, navigation}: any) => {
           });
         }}>
         <Text>{time}</Text>
-        {!startDate || !endDate ? null : !userSchedule.length &&
-          startDate <= index + '00' &&
+        {!startDate || !endDate ? null : startDate <= index + '00' &&
           endDate >= index + '00' ? (
           <Text style={styles.title}>{userSchedule.title}</Text>
         ) : null}
