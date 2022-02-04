@@ -72,8 +72,8 @@ const TimeOfDaySchedule = ({userSchedule, navigation}: any) => {
           });
         }}>
         <Text>{time}</Text>
-        {!startDate || !endDate ? null : startDate <= index + '00' &&
-          endDate >= index + '00' ? (
+        {!userSchedule || !startDate || !endDate ? null : startDate <=
+            index + '00' && endDate >= index + '00' ? (
           <Text style={styles.title}>{userSchedule.title}</Text>
         ) : null}
       </TouchableOpacity>

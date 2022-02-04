@@ -10,6 +10,7 @@ import dayjs from 'dayjs';
 import weekOfYear from 'dayjs/plugin/weekOfYear';
 import GestureRecognizer from 'react-native-swipe-gestures';
 import IconButton from '../components/atoms/IconButton';
+import CalendatHeader from '../components/organisms/CalendarHeader';
 
 const Calendar = ({navigation}: any) => {
   dayjs.extend(weekOfYear);
@@ -86,6 +87,7 @@ const Calendar = ({navigation}: any) => {
       onSwipeLeft={state => onSwipeLeft(state)}
       onSwipeRight={state => onSwipeRight(state)}>
       <SafeAreaView style={styles.body}>
+        <CalendatHeader navigation={navigation} />
         <View style={styles.weekText}>{weekNameHeaderTag}</View>
         <View style={styles.container}>
           <TouchableWithoutFeedback

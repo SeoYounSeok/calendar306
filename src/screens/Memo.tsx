@@ -70,6 +70,7 @@ const styles = StyleSheet.create({
 
 const nameOfWeekKor: string[] = ['일', '월', '화', '수', '목', '금', '토'];
 const today = dayjs();
+const date: string = today.get('date').toString();
 const startOfWeek = today.startOf('week');
 
 type ScheduleProps = {
@@ -119,8 +120,7 @@ const Memo = ({navigation}: any) => {
         });
       }}>
       <Text style={styles.headerText}>{week}</Text>
-      {today.get('date').toString() ==
-      startOfWeek.add(index, 'day').format('D') ? (
+      {date == startOfWeek.add(index, 'day').format('D') ? (
         <Text style={styles.headerTodayText}>
           ಇ{startOfWeek.add(index, 'day').format('D')}ಇ
         </Text>
@@ -141,9 +141,7 @@ const Memo = ({navigation}: any) => {
             <Text style={{fontWeight: 'bold'}}>일정이 없습니다.</Text>
           ) : !userSchedule.length ? (
             <View style={styles.summaryItems}>
-              <Text style={styles.summaryItem} t>
-                {userSchedule.title}
-              </Text>
+              <Text style={styles.summaryItem}>{userSchedule.title}</Text>
             </View>
           ) : (
             <View style={styles.summaryItems}>
