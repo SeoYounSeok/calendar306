@@ -86,6 +86,10 @@ const Schedule = ({navigation}: any) => {
     createSchedule(scheduleProps);
     navigation.navigate('Calendar');
   };
+  const onPressCancle = () => {
+    navigation.navigate('Calendar');
+  };
+
   return (
     <SafeAreaView style={{flex: 1}}>
       <ScrollView>
@@ -194,6 +198,9 @@ const Schedule = ({navigation}: any) => {
         {/* 일정등록은 어디로 이동할지 고민중 상단 탭에 CLOSE와 CHECK / 하단에 표시 */}
         <TouchableOpacity onPress={onPressScheduleRegist}>
           <Text>일정등록</Text>
+        </TouchableOpacity>
+        <TouchableOpacity onPress={onPressCancle}>
+          <Text>취소</Text>
         </TouchableOpacity>
       </ScrollView>
     </SafeAreaView>

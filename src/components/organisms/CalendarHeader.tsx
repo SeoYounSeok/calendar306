@@ -6,14 +6,10 @@ import IconButton from '../atoms/IconButton';
 import {convertDateFormat} from '../../utils/DateUtils';
 
 const CalendatHeader = ({navigation}: any) => {
-  // 리덕스에서 데이터를 가져오는 것은 가능하나, DatePicker 사용 시, date 만 사용해야 하기 때문에 , dayjs 를 사용하지 못함.
-  // 확인하여, 리덕스에 초기 값을 new Date() 로 사용해야 할 것 같음.
   const reduxState = useSelector(state => state);
-  const dateInit = new Date();
-  // const dayjs = reduxState.calendarReducer.thisMonth;
-  // const initDate = dayjs.format('YYYY.M');
+  const dayjs = reduxState.calendarReducer.thisMonth;
 
-  const [date, setDate] = useState(dateInit);
+  const [date, setDate] = useState(dayjs.toDate());
   const [dateVisible, setDateVisible] = useState(false);
   const onPressDate = () => {
     setDateVisible(!dateVisible);
@@ -27,16 +23,12 @@ const CalendatHeader = ({navigation}: any) => {
           navigation.openDrawer();
         }}
       />
-      <View>
-        <TouchableOpacity onPress={onPressDate} style={styles.dateTouchable}>
-          <Text style={styles.dateText}>
-            {convertDateFormat(date).substring(0, 7)}
-          </Text>
-        </TouchableOpacity>
-        {!dateVisible ? null : (
-          <DatePicker date={date} onDateChange={setDate} />
-        )}
-      </View>
+      <TouchableOpacity onPress={onPressDate} style={styles.dateTouchable}>
+        <Text style={styles.dateText}>
+          {convertDateFormat(date).substring(0, 7)}
+        </Text>
+      </TouchableOpacity>
+      {!dateVisible ? null : <DatePicker date={date} onDateChange={setDate} />}
     </View>
   );
 };

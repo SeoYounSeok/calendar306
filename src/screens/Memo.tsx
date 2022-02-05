@@ -12,6 +12,7 @@ import dayjs from 'dayjs';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {findUserSchedule} from '../service/scheduleService';
 import TimeOfDaySchedule from '../components/organisms/TimeOfDaySchedule';
+import CalendatHeader from '../components/organisms/CalendarHeader';
 
 const styles = StyleSheet.create({
   body: {
@@ -134,6 +135,7 @@ const Memo = ({navigation}: any) => {
 
   return (
     <SafeAreaView style={styles.body}>
+      <CalendatHeader navigation={navigation} />
       <View style={styles.containers}>
         <View style={styles.header}>{nameOfWeekArr}</View>
         <View style={styles.summary}>
