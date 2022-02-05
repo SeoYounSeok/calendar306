@@ -51,8 +51,6 @@ const styles = StyleSheet.create({
 });
 
 const TimeOfDaySchedule = ({userSchedule, navigation}: any) => {
-  console.log('하위 컴포넌트 안의 navigation');
-  console.log(navigation);
   const scheduleData = (userSchedule: object | null) => {
     let startDate: string | null = null;
     let endDate: string | null = null;

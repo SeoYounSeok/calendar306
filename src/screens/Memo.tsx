@@ -13,6 +13,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import {findUserSchedule} from '../service/scheduleService';
 import TimeOfDaySchedule from '../components/organisms/TimeOfDaySchedule';
 import CalendatHeader from '../components/organisms/CalendarHeader';
+import GestureRecognizer from 'react-native-swipe-gestures';
 
 const styles = StyleSheet.create({
   body: {
@@ -70,9 +71,6 @@ const styles = StyleSheet.create({
 });
 
 const nameOfWeekKor: string[] = ['일', '월', '화', '수', '목', '금', '토'];
-const today = dayjs();
-const date: string = today.get('date').toString();
-const startOfWeek = today.startOf('week');
 
 type ScheduleProps = {
   userId: string;
@@ -92,16 +90,36 @@ type ScheduleProps = {
 };
 
 const Memo = ({navigation}: any) => {
+  const [thisMonth, setThisMonth] = useState(dayjs());
+  const date: string = thisMonth.get('date').toString();
+  const startOfWeek = thisMonth.startOf('week');
+
   const [userSchedule, setUserSchedule] = useState<
     ScheduleProps | ScheduleProps[] | null
   >(null);
+
+  const [gesture, setGesture] = useState('None');
+
+  const onSwipe = (gestureName: string, gestureState: any) => {
+    // const {SWIPE_LEFT, SWIPE_RIGHT} = swipeDirections;
+    setGesture(gestureName);
+  };
+  const onSwipeLeft = (gestureState: any) => {
+    setThisMonth(thisMonth => thisMonth.add(1, 'month'));
+  };
+
+  const onSwipeRight = (gestureState: any) => {
+    setThisMonth(thisMonth => thisMonth.subtract(1, 'month'));
+  };
+  const getHeaderDate = (thisMonth: any) => {
+    setThisMonth(thisMonth);
+  };
 
   const getUserSchedule = async () => {
     const userId = await AsyncStorage.getItem('@userId');
     // const scheduleData = await findUserSchedule(userId);
     const scheduleData = await findUserSchedule('3'); // 3번으로 테스트 진행
     setUserSchedule(scheduleData);
-    console.log(typeof scheduleData, scheduleData.length, scheduleData);
   };
 
   useEffect(() => {
@@ -109,7 +127,6 @@ const Memo = ({navigation}: any) => {
     return () => console.log('component unmounting');
   }, []);
 
-  console.log(today.get('date').toString());
   const nameOfWeekArr = nameOfWeekKor.map((week: string, index: number) => (
     <TouchableOpacity
       key={startOfWeek.add(index, 'day').format('D')}
@@ -134,35 +151,44 @@ const Memo = ({navigation}: any) => {
   ));
 
   return (
-    <SafeAreaView style={styles.body}>
-      <CalendatHeader navigation={navigation} />
-      <View style={styles.containers}>
-        <View style={styles.header}>{nameOfWeekArr}</View>
-        <View style={styles.summary}>
-          {!userSchedule ? (
-            <Text style={{fontWeight: 'bold'}}>일정이 없습니다.</Text>
-          ) : !userSchedule.length ? (
-            <View style={styles.summaryItems}>
-              <Text style={styles.summaryItem}>{userSchedule.title}</Text>
-            </View>
-          ) : (
-            <View style={styles.summaryItems}>
-              {userSchedule.map((schedule: object, index: number) => (
-                <Text key={'summary' + index} style={styles.summaryItem}>
-                  {schedule.title}
-                </Text>
-              ))}
-            </View>
-          )}
+    <GestureRecognizer
+      onSwipe={(direction, state) => onSwipe(direction, state)}
+      onSwipeLeft={state => onSwipeLeft(state)}
+      onSwipeRight={state => onSwipeRight(state)}>
+      <SafeAreaView style={styles.body}>
+        <CalendatHeader
+          navigation={navigation}
+          getHeaderDate={getHeaderDate}
+          thisMonth={thisMonth}
+        />
+        <View style={styles.containers}>
+          <View style={styles.header}>{nameOfWeekArr}</View>
+          <View style={styles.summary}>
+            {!userSchedule ? (
+              <Text style={{fontWeight: 'bold'}}>일정이 없습니다.</Text>
+            ) : !userSchedule.length ? (
+              <View style={styles.summaryItems}>
+                <Text style={styles.summaryItem}>{userSchedule.title}</Text>
+              </View>
+            ) : (
+              <View style={styles.summaryItems}>
+                {userSchedule.map((schedule: object, index: number) => (
+                  <Text key={'summary' + index} style={styles.summaryItem}>
+                    {schedule.title}
+                  </Text>
+                ))}
+              </View>
+            )}
+          </View>
+          <ScrollView style={styles.content}>
+            <TimeOfDaySchedule
+              userSchedule={userSchedule}
+              navigation={navigation}
+            />
+          </ScrollView>
         </View>
-        <ScrollView style={styles.content}>
-          <TimeOfDaySchedule
-            userSchedule={userSchedule}
-            navigation={navigation}
-          />
-        </ScrollView>
-      </View>
-    </SafeAreaView>
+      </SafeAreaView>
+    </GestureRecognizer>
   );
 };
 
