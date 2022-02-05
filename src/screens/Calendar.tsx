@@ -22,15 +22,17 @@ const Calendar = ({navigation}: any) => {
     // const {SWIPE_LEFT, SWIPE_RIGHT} = swipeDirections;
     setGesture(gestureName);
   };
-
   const onSwipeLeft = (gestureState: any) => {
-    setThisMonth(thisMonth.add(1, 'month'));
+    setThisMonth(thisMonth => thisMonth.add(1, 'month'));
   };
 
   const onSwipeRight = (gestureState: any) => {
-    setThisMonth(thisMonth.subtract(1, 'month'));
+    setThisMonth(thisMonth => thisMonth.subtract(1, 'month'));
   };
 
+  const getHeaderDate = (thisMonth: any) => {
+    setThisMonth(thisMonth);
+  };
   const createCalendar = () => {
     let calendar = [];
     const startOfWeek: number = thisMonth.startOf('month').week();
@@ -87,7 +89,11 @@ const Calendar = ({navigation}: any) => {
       onSwipeLeft={state => onSwipeLeft(state)}
       onSwipeRight={state => onSwipeRight(state)}>
       <SafeAreaView style={styles.body}>
-        <CalendatHeader navigation={navigation} />
+        <CalendatHeader
+          navigation={navigation}
+          getHeaderDate={getHeaderDate}
+          thisMonth={thisMonth}
+        />
         <View style={styles.weekText}>{weekNameHeaderTag}</View>
         <View style={styles.container}>
           <TouchableWithoutFeedback
