@@ -105,11 +105,11 @@ const Memo = ({navigation}: any) => {
     setGesture(gestureName);
   };
   const onSwipeLeft = (gestureState: any) => {
-    setThisMonth(thisMonth => thisMonth.add(1, 'month'));
+    setThisMonth(thisMonth => thisMonth.add(1, 'week'));
   };
 
   const onSwipeRight = (gestureState: any) => {
-    setThisMonth(thisMonth => thisMonth.subtract(1, 'month'));
+    setThisMonth(thisMonth => thisMonth.subtract(1, 'week'));
   };
   const getHeaderDate = (thisMonth: any) => {
     setThisMonth(thisMonth);
